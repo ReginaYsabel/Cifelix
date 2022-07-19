@@ -1,0 +1,84 @@
+button {
+  font-family: "Inter", sans-serif;
+}
+:root {
+  --offcanvas-width: 200px;
+  --topNavbarHeight: 56px;
+}
+.sidebar-nav {
+  width: var(--offcanvas-width);
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+}
+.sidebar-link .right-icon {
+  display: inline-flex;
+}
+.sidebar-link[aria-expanded="true"] .right-icon {
+  transform: rotate(180deg);
+}
+@media (min-width: 992px) {
+  body {
+    overflow: auto !important;
+  }
+  main {
+    margin-left: var(--offcanvas-width);
+  }
+  /* this is to remove the backdrop */
+  .offcanvas-backdrop::before {
+    display: none;
+  }
+  .sidebar-nav {
+    -webkit-transform: none;
+    transform: none;
+    visibility: visible !important;
+   
+    top: var(--topNavbarHeight);
+  }
+}
+.trec
+{
+    padding: 10px 20px;
+    font-size: 12px;
+}
+.lista{
+    padding: 10px;
+    list-style:none;
+    font-size:12px;
+}
+.menu{
+    font-size:12px;
+}
+
+.tabla{
+    margin-top: 4%;
+}
+
+.container-fluid{
+    width: 95%;
+}
+
+.table th{
+    padding: 2%;
+}
+
+.table td{
+    padding: 2%;
+}
+
+.input-brand{
+    width: 20%;
+}
+.btn-toolbar{
+    justify-content: center;
+}
+.gg-span{
+    text-decoration: white;
+}
+
+.estado{
+    border-radius: 0.25rem;
+    width: 60%;
+    display: inline-block;
+}
