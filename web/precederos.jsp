@@ -1,3 +1,5 @@
+<%@page import="Modelo.lote"%>
+<%@page import="Modelo.producto"%>
 <%@page import="Modelo.perecedero"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -24,57 +26,10 @@
                     </div>
                 </div> 
 
-                <!-- Buscador y Ventana Modal -->
-                <div class="d-flex align-items-center justify-content-between">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">Agregar Producto</button>
-
-                    <!-- Modal -->                   
-                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <form method="post" action="PerecederosController?op=insertar">
-                                    
-                                    <!-- Titulo del modal -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Agregar Producto</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    
-                                    <!-- Cuerpo del modal -->
-                                    <div class="modal-body">                                   
-                                        <div class="row">                              
-                                            <div class="col-md-6 form-group">
-                                                <label for="producto" class="col-form-label">Producto</label>
-                                                <input type="text" class="form-control" id="producto" name="txtProd">
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="cantidad" class="col-form-label">Cantidad</label>
-                                                <input type="text" class="form-control" id="cantdad" name="txtCant">
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="estado" class="col-form-label">Estado</label>
-                                                <input type="text" class="form-control" id="estado" name="txtEst">
-                                            </div>
-                                            <div class="col-md-6 form-group">
-                                                <label for="observacion" class="col-form-label">Observacions</label>
-                                                <input type="text" class="form-control" id="observacion" name="txtObsv">
-                                            </div>
-                                        </div>
-
-                                        <!-- Agregar Categoria -->
-                                        <div class="form-group mt-3">
-                                            <button type="submit" class="btn btn-primary">Agregar</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
+                <!-- Buscador -->
+                <div>
+                    <div class="input-group mt-3">                     
+                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
                     </div>
                 </div>
@@ -87,34 +42,44 @@
                                 <th scope="col">CODIGO</th>
                                 <th scope="col">PRODUCTO</th>                              
                                 <th scope="col">CANTIDAD</th>
-                                <th scope="col">CATEGORIA</th>
+                                <th scope="col">VENCIMIENTO</th>
                                 <th scope="col">ESTADO</th>
-                                <th scope="col">OBSERVACIÓN</th>
                             </tr>
                         </thead>
                         <tbody>
-                                <%
-                                    ArrayList<perecedero> lista = (ArrayList<perecedero>) request.getAttribute("lista");
-                                    for (int i = 0; i < lista.size(); i++) {
-                                        perecedero per = lista.get(i);
-                                %>
+                            <%                                ArrayList<lote> lista = (ArrayList<lote>) request.getAttribute("lista");
+                                for (int i = 0; i < lista.size(); i++) {
+                                    lote lot = lista.get(i);
+                            %>
                             <tr>
-                                <td><%=per.getCodigo()%></td>
-                                <td><%=per.getNombre()%></td>
-                                <td><%=per.getCantidad()%></td>
-                                <td><%=per.getCategoria()%></td>
-                                <td><%=per.getEstado()%></td>
-                                <td><%=per.getObservacion()%></td>
+                                <td><%=lot.getCodigo()%></td>
+                                <td><%=lot.getProducto()%></td>
+                                <td><%=lot.getCantidad()%></td>
+                                <td><%=lot.getVencimiento()%></td>
+                                <td><p class="estado"><%=lot.getEstado()%></p></td>
                             </tr>
                             <%
                                 }
                             %>
-                             
                         </tbody>
                     </table>
                 </div>
             </div>
         </main>
+        <script>
+            function color() {
+                const p = document.getElementsByClassName("estado");
+                for (let i = 0; i < p.length; i++) {
+                    const estado = p[i].textContent;                
+                    if (estado === "Vencido") {
+                        p[i].style.backgroundColor = "#ff7588";                       
+                    } else {
+                        p[i].style.backgroundColor = "#16d39a";                        
+                    }
+                }
+            }           
+            color();
+        </script>
     </body>
 </html>
 

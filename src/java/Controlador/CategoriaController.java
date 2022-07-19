@@ -11,8 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import Modelo.categoria;
+import java.sql.Connection;
 
 public class CategoriaController extends HttpServlet {
+    Connection cn = ConDB.getConnection();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,7 +49,7 @@ public class CategoriaController extends HttpServlet {
         if (op.equals("listar")) {
             try {
                 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from categoria");
+                PreparedStatement sta = cn.prepareStatement("select * from categoria");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<categoria> lista = new ArrayList<>();
@@ -71,9 +73,9 @@ public class CategoriaController extends HttpServlet {
         //Opcion eliminar
         else if (op.equals("eliminar")) {
             try {
-                int id = Integer.parseInt(request.getParameter("id"));
+                int id = Integer.parseInt(request.getParameter("idE"));
                 log(""+id);
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("delete from categoria where id_Categoria=?");
+                PreparedStatement sta = cn.prepareStatement("delete from categoria where id_Categoria=?");
                 sta.setInt(1, id);
                 sta.executeUpdate();
                 request.getRequestDispatcher("CategoriaController?op=listar").forward(request, response);
@@ -103,7 +105,7 @@ public class CategoriaController extends HttpServlet {
             String categoria = request.getParameter("txtCatEdit");
 
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("update categoria set categoria=? where id_Categoria=?");
+                PreparedStatement sta = cn.prepareStatement("update categoria set categoria=? where id_Categoria=?");
                 sta.setString(1, categoria);
                 sta.setInt(2, id);
                 sta.executeUpdate();
@@ -118,7 +120,7 @@ public class CategoriaController extends HttpServlet {
         else if (op.equals("listar")) {
             try {
                 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from categoria");
+                PreparedStatement sta = cn.prepareStatement("select * from categoria");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<categoria> lista = new ArrayList<>();
@@ -146,7 +148,7 @@ public class CategoriaController extends HttpServlet {
         else if (op.equals("insertar")) {
             String categoria = request.getParameter("txtCat");
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into categoria (categoria) values(?)");
+                PreparedStatement sta = cn.prepareStatement("insert into categoria (categoria) values(?)");
                 sta.setString(1, categoria); 
                 sta.executeUpdate();
                 request.getRequestDispatcher("CategoriaController?op=listar").forward(request, response);

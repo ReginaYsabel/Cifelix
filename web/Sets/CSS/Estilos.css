@@ -2,7 +2,7 @@ button {
   font-family: "Inter", sans-serif;
 }
 :root {
-  --offcanvas-width: 230px;
+  --offcanvas-width: 200px;
   --topNavbarHeight: 56px;
 }
 .sidebar-nav {
@@ -76,6 +76,9 @@ button {
 .gg-span{
     text-decoration: white;
 }
-.salmon_color{
-   background-color: #33b5e5;
+
+.estado{
+    border-radius: 0.25rem;
+    width: 60%;
+    display: inline-block;
 }

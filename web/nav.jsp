@@ -58,7 +58,7 @@
                             <li class="lista"> <a href="ProductoController?op=listar" class="link-dark" style="text-decoration: none">Productos</a></li>
                             <li class="lista"> <a href="CategoriaController?op=listar" class="link-dark" style="text-decoration: none">Categorias</a></li>
                             <li class="lista"> <a href="MarcasController?op=listar" class="link-dark" style="text-decoration: none">Marcas</a></li>
-                            <li class="lista"> <a href="PerecederosController?op=listar" class="link-dark" style="text-decoration: none">Productos perecederos</a></li>
+                            <li class="lista"> <a href="LoteController?op=listar" class="link-dark" style="text-decoration: none">Productos perecederos</a></li>
                         </ul>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista"><a class="nav-link text-dark" href="cotizacionController?op=listar">Generar Cotizacion</a></li>
+                            <li class="lista">Generar cotizaion</li>
                             <li class="lista">Ver cotizaciones</li>
                         </ul>
 
@@ -101,6 +101,24 @@
             </div>
 
             <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingfour">
+                    <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefour" aria-expanded="false" aria-controls="flush-collapsefour">
+                        APARTADOS
+                    </button>
+                </h2>
+                <div id="flush-collapsefour" class="accordion-collapse collapse" aria-labelledby="flush-headingfour" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <ul>
+                            <li class="lista">Apartar productos</li>
+                            <li class="lista">Apartados por fecha</li>
+                            <li class="lista">consultar</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingfive">
                     <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefive" aria-expanded="false" aria-controls="flush-collapsefive">
                         INVENTARIOS
@@ -109,9 +127,10 @@
                 <div id="flush-collapsefive" class="accordion-collapse collapse" aria-labelledby="flush-headingfive" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">R. produc vendidos</a></li>
-                            <li class="lista"><a class="nav-link text-dark" href="proveedorController?op=listar">Lista Proveedores</a></li>
+                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">Abrir nuevo inventario</a></li>
+                            <li class="lista">Eliminar inventario</li>
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -126,6 +145,7 @@
                     <div id="flush-collapsesix" class="accordion-collapse collapse" aria-labelledby="flush-headingsix" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
+                                <li class="lista"><a class="nav-link text-dark" href="usuariosController?US=listar">Lista de Usuarios</a></li>
                                 <li class="lista"><a class="nav-link text-dark" href="empleadosController?op=listar">Trabajadores</a></li>
                             </ul>
                         </div>

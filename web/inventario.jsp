@@ -25,44 +25,10 @@
                     </div>
                 </div> 
 
-                <!-- Buscador y Ventana Modal -->
-                <div class="d-flex align-items-center justify-content-between">
-                  
-                    <!-- Modal -->                   
-                    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <form method="post" action="CategoriaController?op=insertar">
-
-                                    <!-- Titulo del modal --> 
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Insertar codigo</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-
-                                    <!-- Cuerpo del modal --> 
-                                    <div class="modal-body">                                   
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <label for="categoria" class="col-form-label">Codigo</label>
-                                                <input type="text" class="form-control" id="categoria" name="txtCat">
-                                            </div>
-                                         
-                                        </div>
-
-                                        <!-- Agregar Categoria -->
-                                        <div class="form-group mt-3">
-                                            <button type="submit" class="btn btn-primary">Insertar</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
+                <!-- Buscador  -->
+                <div>
+                    <div class="input-group mt-3">                     
+                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
                     </div>
                 </div>

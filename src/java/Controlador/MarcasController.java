@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.marca;
 import Utils.ConDB;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MarcasController extends HttpServlet {
+    Connection cn = ConDB.getConnection();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,7 +52,7 @@ public class MarcasController extends HttpServlet {
         if (op.equals("listar")) {
             try {
 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from marca");
+                PreparedStatement sta =  cn.prepareStatement("select * from marca");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<marca> lista = new ArrayList<>();
@@ -70,7 +72,7 @@ public class MarcasController extends HttpServlet {
         else if (op.equals("eliminar")) {
             try {
                 int id = Integer.parseInt(request.getParameter("idE"));
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("delete from marca where id_Marca=?");
+                PreparedStatement sta =  cn.prepareStatement("delete from marca where id_Marca=?");
                 sta.setInt(1, id);
                 sta.executeUpdate();
                 request.getRequestDispatcher("MarcasController?op=listar").forward(request, response);
@@ -101,7 +103,7 @@ public class MarcasController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("idC"));
             String marca = request.getParameter("txtMarcaEdit");
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("update marca set marca=? where id_Marca=?");
+                PreparedStatement sta =  cn.prepareStatement("update marca set marca=? where id_Marca=?");
                 sta.setString(1, marca);
                 sta.setInt(2, id);
                 sta.executeUpdate();
@@ -116,7 +118,7 @@ public class MarcasController extends HttpServlet {
         else if (op.equals("listar")) {
             try {
 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from marca");
+                PreparedStatement sta =  cn.prepareStatement("select * from marca");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<marca> lista = new ArrayList<>();
@@ -137,7 +139,7 @@ public class MarcasController extends HttpServlet {
             String marca = request.getParameter("txtMarca");
             String descrip = request.getParameter("txtDescripcion");
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into marca (marca) values(?)");
+                PreparedStatement sta =  cn.prepareStatement("insert into marca (marca) values(?)");
                 sta.setString(1, marca);
                 sta.executeUpdate();
                 request.getRequestDispatcher("MarcasController?op=listar").forward(request, response);

@@ -9,6 +9,7 @@ import Modelo.inventario;
 import Utils.ConDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Rem
  */
 public class InventarioController extends HttpServlet {
+    Connection cn = ConDB.getConnection();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +38,7 @@ public class InventarioController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InventarioController</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InventarioController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,14 +62,23 @@ public class InventarioController extends HttpServlet {
         if (op.equals("listar")) {
             try {
                 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("SELECT p.id_Pro, p.descripcion, p.cantidad, sum(dv.cantidad), (p.cantidad - sum(dv.cantidad)) from productos as p inner join det_ventas as dv on p.id_Pro = dv.id_Pro;");
+                PreparedStatement sta = cn.prepareStatement("SELECT p.id_Pro, p.descripcion, sum(dv.cantidad) from productos as p inner join det_ventas as dv on p.id_Pro = dv.id_Pro;");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<inventario> lista = new ArrayList<>();
 
                 while (rs.next()) {
-                    inventario inv = new inventario(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4),rs.getInt(5));
-                    lista.add(inv);
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+                        int inicial = rs2.getInt(1);
+                        int venta = rs.getInt(3);
+                        inventario inv = new inventario(rs.getInt(1), rs.getString(2), inicial ,venta ,(inicial - venta));
+                        lista.add(inv);
+                    }
+                    
                                                        
                 }
                 request.setAttribute("lista", lista);
