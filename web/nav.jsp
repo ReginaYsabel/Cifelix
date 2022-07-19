@@ -74,7 +74,7 @@
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista">Generar cotizaion</li>
+                            <li class="lista"> <a class="nav-link link-dark" href="cotizacionController?op=listar">Generar cotizaion</a></li>
                             <li class="lista">Ver cotizaciones</li>
                         </ul>
 

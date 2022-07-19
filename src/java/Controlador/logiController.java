@@ -2,14 +2,12 @@
 package Controlador;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Utils.ConDB;
-import Modelo.Empleado;
 import java.sql.ResultSet;
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +30,7 @@ public class logiController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-       String op=request.getParameter("op");
+        String op=request.getParameter("op");
         if(op.equals("login"))
         {
             String logeo=request.getParameter("txtUsu");
@@ -61,7 +59,7 @@ public class logiController extends HttpServlet {
             }
             catch (Exception e)
             {
-                System.out.println("error" +e);
+                log("error" +e);
             }
         }
          else if(op.equals("cerrar"))
@@ -84,7 +82,7 @@ public class logiController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
         
         
     }
