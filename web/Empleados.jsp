@@ -10,12 +10,14 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
         <link href="Sets/CSS/Estilos.css" rel="stylesheet" type="text/css"/>
+        <script src="https://kit.fontawesome.com/9cac7ea002.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <!-- Navegador y Sidebar -->
+        <%@include file="user.jsp" %>
         <%@ include file="nav.jsp"%>
                <main class="mt-5 pt-3">
-            <div class="container-fluid">
+                <div class="container-fluid">
                 
                 <!-- Titulo -->
                 <div class="row">
@@ -26,7 +28,7 @@
 
                 <!-- Buscador y Ventana modal -->
                 <div class="d-flex align-items-center justify-content-between">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">Agregar Trabajador </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"> <i class="icon fa-solid fa-plus"></i> &nbsp; Agregar Trabajador </button>
 
                     <!-- Modal -->
                     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -45,33 +47,33 @@
                                         <div class="row">
                                             <div class="col-md-6 form-group">
                                                 <label for="nombre" class="col-form-label">Nombres-Apellidos</label>
-                                                <input type="text" class="form-control" id="nombre" name="txtNom">
+                                                <input type="text" class="form-control" id="nombre" name="txtNom" required>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="DNI" class="col-form-label">DNI</label>
-                                                <input type="text" class="form-control" id="DNI" name="txtDNI">
+                                                <input type="text" class="form-control" id="DNI" name="txtDNI" required>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="perfil" class="col-form-label">Perfil</label>
-                                                <input type="text" class="form-control" id="perfil" name="txtPer">
+                                                <input type="text" class="form-control" id="perfil" name="txtPer" required>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="correo" class="col-form-label">Correo</label>
-                                                <input type="text" class="form-control" id="correo" name="txtCor">
+                                                <input type="text" class="form-control" id="correo" name="txtCor" required>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="password" class="col-form-label">Password</label>
-                                                <input type="text" class="form-control" id="password" name="txtPas">
+                                                <input type="text" class="form-control" id="password" name="txtPas"required>
                                             </div>
                                             <div class="col-md-6 form-group">
                                                 <label for="sueldo" class="col-form-label">Seuldo</label>
-                                                <input type="text" class="form-control" id="sueldo" name="txtSue">
+                                                <input type="text" class="form-control" id="sueldo" name="txtSue" required>
                                             </div>
                                         </div>
                                         
                                         <!-- Agregar Categoria -->
-                                        <div class="form-group mt-3">
-                                            <button type="submit" class="btn btn-primary">Agregar</button>
+                                        <div class="form-group mt-5">
+                                            <button type="submit" class="btn btn-primary"><i class="icon fa-solid fa-plus"></i> &nbsp; Agregar</button>
                                         </div>
                                     </div>
                                 </form>

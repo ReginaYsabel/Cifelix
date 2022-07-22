@@ -7,6 +7,7 @@ package Controlador;
 
 import Modelo.PROD;
 import Modelo.Cotizar;
+import Modelo.cotizacion;
 import Utils.ConDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -94,7 +95,8 @@ public class cotizacionController extends HttpServlet {
             String cod=request.getParameter("cod");
             String nom=request.getParameter("nom");
             double pre=Double.parseDouble(request.getParameter("pre"));
-            int canDet=Integer.parseInt(request.getParameter("txtCan"));
+            int cant=Integer.parseInt(request.getParameter("txtCan"));
+            
             
             int indice=-1;
             int can=0;
@@ -108,10 +110,10 @@ public class cotizacionController extends HttpServlet {
                 }
             }
             if(indice==-1){
-                Cotizar c=new Cotizar(cod, nom, pre, canDet);
+                Cotizar c=new Cotizar(cod, nom, pre, cant);
                 carrito.add(c);
             }else{
-                int can2=can+canDet;
+                int can2=can+cant;
                 Cotizar c3=new Cotizar(cod,nom,pre,can2);
                 carrito.set(indice, c3);
             }
@@ -185,7 +187,56 @@ public class cotizacionController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-          
+        
+        String op = request.getParameter("op");
+        
+        if (op.equals("insertar")) {
+            String nom = request.getParameter("txtNom");
+            int dni = Integer.parseInt(request.getParameter("txtDNI"));
+            int cel= Integer.parseInt(request.getParameter("txtCel"));
+            String dir=request.getParameter("txtDir");
+            String fecha=request.getParameter("txtFecha");
+            double subt=Double.parseDouble(request.getParameter("txtst"));
+            double igv=Double.parseDouble(request.getParameter("txtIGV"));
+            double total=Double.parseDouble(request.getParameter("txtT"));
+            try {
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into cotizacion (Nom_Ape,DNI,celular,direccion,fecha,subtotal, Pre_total) values(?,?,?,?,?,?,?)");
+                sta.setString(1, nom);
+                sta.setInt(2, dni);
+                sta.setInt(3, cel);
+                sta.setString(4, dir);
+                sta.setString(5, fecha);
+                sta.setDouble(6, subt);
+                sta.setDouble(7, igv);
+                sta.setDouble(8, total);
+                sta.executeUpdate();
+                request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
+
+            } catch (IOException | SQLException | ServletException e) {
+                System.out.println("Error al insertar elemento");
+            }
+        }
+        
+         else if (op.equals("insertarDT")) {
+            
+            int cod = Integer.parseInt(request.getParameter("txtCodigo"));
+            int cant= Integer.parseInt(request.getParameter("txtCantidad"));
+            double total=Double.parseDouble(request.getParameter("txtPrecio"));
+            double monto=Double.parseDouble(request.getParameter("txtMonto"));
+            try {
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into det_cotizacion (id_Pro,cantidad ,precio,direccion,monto) values(?,?,?,?,?)");
+                sta.setInt(1, cod);
+                sta.setInt(2, cant);
+                sta.setDouble(3, total);
+                sta.setDouble(4, monto);
+                sta.executeUpdate();
+                request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
+
+            } catch (IOException | SQLException | ServletException e) {
+                System.out.println("Error al insertar elemento");
+            }
+        }
+        
     }
 
     /**
