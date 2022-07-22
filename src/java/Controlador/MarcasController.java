@@ -64,7 +64,7 @@ public class MarcasController extends HttpServlet {
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("marcas.jsp").forward(request, response);
             } catch (Exception e) {
-                System.out.println("Error al mostrar elmentos");
+                System.out.println("Error al mostrar elmentos: "+e);
             }
         }
         
@@ -80,6 +80,7 @@ public class MarcasController extends HttpServlet {
                  System.out.println("Error al eliminar elementos");
             }
         }
+        
         
     }
 
@@ -146,6 +147,26 @@ public class MarcasController extends HttpServlet {
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al insertar elemento");
+            }
+        }
+        else if(op.equals("consultar")){
+            
+            String nombre=request.getParameter("buscar");
+            try{
+                PreparedStatement sta=cn.prepareStatement("select * from marca where marca like ?");
+                sta.setString(1, "%"+nombre+"%");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<marca> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    marca marc = new marca(rs.getInt(1), rs.getString(2));
+                    lista.add(marc);
+                }
+                request.setAttribute("lista", lista);
+                request.getRequestDispatcher("marcas.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.out.println("Error al mostrar elmentos: "+e);
             }
         }
         

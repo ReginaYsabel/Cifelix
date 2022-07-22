@@ -46,10 +46,10 @@
                                     <div class="modal-body">                                   
                                         <div class="mb-3">
                                             <label for="marca" class="col-form-label">Marca</label>
-                                            <input type="text" class="form-control" id="marca" name="txtMarca">
+                                            <input type="text" class="form-control" id="marca" name="txtMarca" required>
                                         </div>
 
-                                        <!-- Agregar Categoria -->
+                                        <!-- Agregar Marca -->
                                         <div class="form-group mt-3">
                                             <button type="submit" class="btn btn-primary">Agregar</button>
                                         </div>
@@ -60,10 +60,12 @@
                     </div>
 
                     <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                    </div>
+                    <form class="buscador" method="post" action="MarcasController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="buscar" required>
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Tabla de marcas -->
@@ -109,7 +111,7 @@
 
                                                                 <div class="mb-3">
                                                                     <label for="marca" class="col-form-label">Marca</label>
-                                                                    <input type="text" class="form-control" id="marca" name="txtMarcaEdit" value="<%=marc.getNombre()%>">
+                                                                    <input type="text" class="form-control" id="marca" name="txtMarcaEdit" value="<%=marc.getNombre()%>" required>
                                                                 </div>
                                                          
 

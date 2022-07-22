@@ -2,7 +2,7 @@ button {
   font-family: "Inter", sans-serif;
 }
 :root {
-  --offcanvas-width: 200px;
+  --offcanvas-width: 230px;
   --topNavbarHeight: 56px;
 }
 .sidebar-nav {
@@ -81,4 +81,8 @@ button {
     border-radius: 0.25rem;
     width: 60%;
     display: inline-block;
+}
+
+.buscador{
+    display:contents;
 }

@@ -60,7 +60,7 @@ public class ProductoController extends HttpServlet {
                 
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
@@ -76,9 +76,8 @@ public class ProductoController extends HttpServlet {
             } catch (Exception e) {
                 log("Error al mostrar elmentos: "+e);
             }
-        }
-        
-        if (true) {
+            
+            if (true) {
             try {
 
                 PreparedStatement sta = cn.prepareStatement("select * from marca");
@@ -107,7 +106,7 @@ public class ProductoController extends HttpServlet {
 
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
@@ -116,7 +115,7 @@ public class ProductoController extends HttpServlet {
                     }                  
                 }
                 request.setAttribute("listaC", listaC);
-                log("servlet produvtos");
+                
                                
             } catch (Exception e) {
                  log("Error al mostrar elmentos"+e);
@@ -142,6 +141,21 @@ public class ProductoController extends HttpServlet {
                 log("Error al mostrar elmentos: "+ e);
             }
         }
+        }
+        //Opcion eliminar
+        else if (op.equals("eliminar")) {
+            try {
+                int id = Integer.parseInt(request.getParameter("idE"));
+                PreparedStatement sta = cn.prepareStatement("delete from productos where id_Pro=?");
+                sta.setInt(1, id);
+                sta.executeUpdate();
+                request.getRequestDispatcher("ProductoController?op=listar").forward(request, response);
+            } catch (IOException | SQLException | ServletException e) {
+                 System.out.println("Error al eliminar elemento");
+            }
+        }
+        
+        
         
     }
 
@@ -174,6 +188,7 @@ public class ProductoController extends HttpServlet {
                 sta.setInt(3, marca);
                 sta.setInt(4, categoria);
                 sta.setInt(5, proveedor);
+                
                 sta.executeUpdate();
                 
                 response.sendRedirect("ProductoController?op=listar");
@@ -195,7 +210,7 @@ public class ProductoController extends HttpServlet {
                 
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
@@ -207,12 +222,194 @@ public class ProductoController extends HttpServlet {
 
                 request.setAttribute("lista", lista);
                 
-                request.getRequestDispatcher("productos.jsp").forward(request, response);
                 
             } catch (Exception e) {
-                log("Error al mostrar elementos: "+e);
+                log("Error al mostrar elmentos: "+e);
             }
-        }      
+            
+            if (true) {
+            try {
+
+                PreparedStatement sta = cn.prepareStatement("select * from marca");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<marca> listaM = new ArrayList<>();
+
+                while (rs.next()) {
+                    marca marc = new marca(rs.getInt(1), rs.getString(2));
+                    listaM.add(marc);
+                }
+                request.setAttribute("listaM", listaM);
+                              
+            } catch (Exception e) {
+                log("Error al mostrar elmentos"+e);
+            }
+        }
+
+         
+        if (true) {
+            try {               
+                PreparedStatement sta = cn.prepareStatement("select * from categoria");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<categoria> listaC = new ArrayList<>();
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+                        categoria cat = new categoria(id, rs.getString(2), rs2.getInt(1));
+                        listaC.add(cat);
+                    }                  
+                }
+                request.setAttribute("listaC", listaC);
+                
+                               
+            } catch (Exception e) {
+                 log("Error al mostrar elmentos"+e);
+            }
+        }
+        
+        if (true) {
+            try {
+
+                PreparedStatement sta = cn.prepareStatement("select * from proveedor");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<proveedor> listaP = new ArrayList<>();
+
+                while (rs.next()) {
+                    proveedor prov = new proveedor(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6));
+                    listaP.add(prov);
+                }
+                request.setAttribute("listaP", listaP);
+                
+                request.getRequestDispatcher("productos.jsp").forward(request, response);
+            } catch (Exception e) {
+                log("Error al mostrar elmentos: "+ e);
+            }
+        }
+        }  
+        //Opcion editar
+        if(op.equals("editar")){
+            int id = Integer.parseInt(request.getParameter("idC"));
+            String nombre = request.getParameter("txtProdEdit");
+            int categoria = Integer.parseInt(request.getParameter("select_catEdit"));
+            double precio = Double.parseDouble(request.getParameter("txtPrecioEdit"));
+            int marca = Integer.parseInt(request.getParameter("select_marcaEdit"));
+            int proveedor = Integer.parseInt(request.getParameter("select_provEdit"));
+
+            try {
+                PreparedStatement sta = cn.prepareStatement("update productos set descripcion=?, precio=?, id_Marca=?, id_Categoria=?, id_Proveedor=? where id_Pro=?");
+                sta.setString(1, nombre);
+                sta.setDouble(2, precio);
+                sta.setInt(3, marca);
+                sta.setInt(4, categoria);
+                sta.setInt(5, proveedor);
+                sta.setInt(6, id);
+                sta.executeUpdate();
+                request.getRequestDispatcher("ProductoController?op=listar").forward(request, response);
+
+            } catch (IOException | SQLException | ServletException e) {
+                System.out.println("Error al actualizar elemento");
+            }
+        }
+        
+        else if(op.equals("consultar")){
+            
+            String nombre=request.getParameter("buscar");
+            try{
+                PreparedStatement sta=cn.prepareStatement("select * from productos where descripcion like ?");
+                sta.setString(1, "%"+nombre+"%");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<producto> lista = new ArrayList<>();
+                
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+
+                        producto prod = new producto(id,rs.getString(2), rs.getDouble(3),rs2.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6));
+                        lista.add(prod);
+                    }                                      
+                }
+
+                request.setAttribute("lista", lista);
+
+            }catch(SQLException e){
+                log(""+e);
+            }
+            if (true) {
+            try {
+
+                PreparedStatement sta = cn.prepareStatement("select * from marca");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<marca> listaM = new ArrayList<>();
+
+                while (rs.next()) {
+                    marca marc = new marca(rs.getInt(1), rs.getString(2));
+                    listaM.add(marc);
+                }
+                request.setAttribute("listaM", listaM);
+                              
+            } catch (Exception e) {
+                log("Error al mostrar elmentos"+e);
+            }
+        }
+
+         
+        if (true) {
+            try {               
+                PreparedStatement sta = cn.prepareStatement("select * from categoria");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<categoria> listaC = new ArrayList<>();
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+                        categoria cat = new categoria(id, rs.getString(2), rs2.getInt(1));
+                        listaC.add(cat);
+                    }                  
+                }
+                request.setAttribute("listaC", listaC);
+                log("servlet produvtos");
+                               
+            } catch (Exception e) {
+                 log("Error al mostrar elmentos"+e);
+            }
+        }
+        
+        if (true) {
+            try {
+
+                PreparedStatement sta = cn.prepareStatement("select * from proveedor");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<proveedor> listaP = new ArrayList<>();
+
+                while (rs.next()) {
+                    proveedor prov = new proveedor(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6));
+                    listaP.add(prov);
+                }
+                request.setAttribute("listaP", listaP);
+                
+                request.getRequestDispatcher("productos.jsp").forward(request, response);
+            } catch (IOException | SQLException | ServletException e) {
+                log("Error al mostrar elmentos: "+ e);
+            }
+        }
+                        
+        }
     }
 
     /**

@@ -29,7 +29,7 @@
                 <!-- Buscador -->
                 <div>
                     <div class="input-group mt-3">                     
-                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2">
+                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2" required>
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
                     </div>
                 </div>
@@ -47,7 +47,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%                                ArrayList<lote> lista = (ArrayList<lote>) request.getAttribute("lista");
+                            <%  
+                                ArrayList<lote> lista = (ArrayList<lote>) request.getAttribute("lista");
                                 for (int i = 0; i < lista.size(); i++) {
                                     lote lot = lista.get(i);
                             %>

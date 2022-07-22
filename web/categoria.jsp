@@ -49,7 +49,7 @@
                                             
                                             <div class="form-group">
                                                 <label for="categoria" class="col-form-label">Categoria</label>
-                                                <input type="text" class="form-control" id="categoria" name="txtCat">                                              
+                                                <input type="text" class="form-control" id="categoria" name="txtCat" required>                                              
                                             </div>
                                             
                                         </div>
@@ -65,10 +65,12 @@
                     </div>
 
                     <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                    </div>
+                    <form class="buscador" method="post" action="CategoriaController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="busca" required>
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Tabla de categorias -->
@@ -117,7 +119,7 @@
                                                                 <div class="row">
                                                                     <div class="form-group">
                                                                         <label for="categoria" class="col-form-label">Categoria</label>
-                                                                        <input type="text" class="form-control" id="categoria" name="txtCatEdit" value="<%=cat.getNombre()%>">
+                                                                        <input type="text" class="form-control" id="categoria" name="txtCatEdit" value="<%=cat.getNombre()%>" required>
                                                                     </div>
                                                                 </div>
 

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
+    <display-name>Java Servlet 2.5 Web Application</display-name>
+
     <servlet>
         <servlet-name>CategoriaController</servlet-name>
         <servlet-class>Controlador.CategoriaController</servlet-class>
@@ -21,10 +26,6 @@
         <servlet-class>Controlador.empleadosController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>usuariosController</servlet-name>
-        <servlet-class>Controlador.usuariosController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>logiController</servlet-name>
         <servlet-class>Controlador.logiController</servlet-class>
     </servlet>
@@ -40,29 +41,39 @@
         <servlet-name>LoteController</servlet-name>
         <servlet-class>Controlador.LoteController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>proveedorController</servlet-name>
+        <servlet-class>Controlador.proveedorController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cotizacionController</servlet-name>
+        <servlet-class>Controlador.cotizacionController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CategoriaController</servlet-name>
         <url-pattern>/CategoriaController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MarcasController</servlet-name>
-        <url-pattern>/MarcasController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductoController</servlet-name>
         <url-pattern>/ProductoController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PerecederosController</servlet-name>
-        <url-pattern>/PerecederosController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>empleadosController</servlet-name>
         <url-pattern>/empleadosController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>usuariosController</servlet-name>
-        <url-pattern>/usuariosController</url-pattern>
+        <servlet-name>SelectController</servlet-name>
+        <url-pattern>/SelectController</url-pattern>
+    </servlet-mapping>
+    <servlet-name>LoteController</servlet-name>
+    <url-pattern>/LoteController</url-pattern>
+    <servlet-mapping>
+        <servlet-name>MarcasController</servlet-name>
+        <url-pattern>/MarcasController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PerecederosController</servlet-name>
+        <url-pattern>/PerecederosController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>logiController</servlet-name>
@@ -73,12 +84,12 @@
         <url-pattern>/InventarioController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SelectController</servlet-name>
-        <url-pattern>/SelectController</url-pattern>
+        <servlet-name>proveedorController</servlet-name>
+        <url-pattern>/proveedorController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoteController</servlet-name>
-        <url-pattern>/LoteController</url-pattern>
+        <servlet-name>cotizacionController</servlet-name>
+        <url-pattern>/cotizacionController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

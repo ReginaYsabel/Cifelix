@@ -56,7 +56,7 @@ public class CategoriaController extends HttpServlet {
 
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
@@ -82,7 +82,8 @@ public class CategoriaController extends HttpServlet {
             } catch (IOException | SQLException | ServletException e) {
                  System.out.println("Error al eliminar elemento");
             }
-        }      
+        }   
+        
     }
 
     /**
@@ -127,8 +128,8 @@ public class CategoriaController extends HttpServlet {
 
                 while (rs.next()) {
                     int id = rs.getInt(1);
-                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
-                    sta.setInt(1, id);
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
                         categoria cat = new categoria(id, rs.getString(2), rs2.getInt(1));
@@ -140,7 +141,7 @@ public class CategoriaController extends HttpServlet {
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("categoria.jsp").forward(request, response);
             } catch (IOException | SQLException | ServletException e) {
-                 System.out.println("Error al mostrar elmentos");
+                 log("Error al mostrar elmentos: "+e);
             }
         } 
         
@@ -157,6 +158,33 @@ public class CategoriaController extends HttpServlet {
                 System.out.println("Error al insertar elemento");
             }
         } 
+        
+        else if(op.equals("consultar")){
+            
+            String nombre=request.getParameter("busca");
+            try{
+                PreparedStatement sta=cn.prepareStatement("select * from categoria where Categoria like ?");
+                sta.setString(1, "%"+nombre+"%");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<categoria> lista = new ArrayList<>();
+                
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from productos where id_Categoria = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+                        categoria cat = new categoria(id, rs.getString(2), rs2.getInt(1));
+                        lista.add(cat);
+                    }               
+                }
+                request.setAttribute("lista", lista);
+                request.getRequestDispatcher("categoria.jsp").forward(request, response);
+            } catch (IOException | SQLException | ServletException e) {
+                 System.out.println("Error al mostrar elmentos"+e);
+            }
+        }
         
         
     }

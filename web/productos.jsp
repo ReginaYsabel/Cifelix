@@ -5,7 +5,6 @@
 <%@page import="Modelo.producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="user.jsp"%>
-<jsp:include page="/SelectController"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,20 +51,19 @@
                                             <div class="row">                              
                                                 <div class="col-md-6 form-group">
                                                     <label for="producto" class="col-form-label">Producto</label>
-                                                    <input type="text" class="form-control" id="producto" name="txtProd">
+                                                    <input type="text" class="form-control" id="producto" name="txtProd" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="precio" class="col-form-label">Precio</label>
-                                                    <input type="text" class="form-control" id="precio" name="txtPrecio">
+                                                    <input type="text" class="form-control" id="precio" name="txtPrecio" required>
                                                 </div>
 
                                                 <div class="col-md-6 form-group">
                                                     <label for="marca" class="col-form-label">Marca</label>
                                                     <!-- <input type="text" class="form-control" id="marca" name="txtMarca">  -->
-                                                    <select class="form-select" aria-label="Default select example" name="select_marca">
-                                                        <option selected>Elegir marca</option>
-                                                        <%  
-                                                            ArrayList<marca> listaM = (ArrayList<marca>) request.getAttribute("listaM");
+                                                    <select class="form-select" aria-label="Default select example" name="select_marca" required>
+                                                        <option selected disabled>Elegir marca</option>
+                                                        <%                                                            ArrayList<marca> listaM = (ArrayList<marca>) request.getAttribute("listaM");
                                                             for (int i = 0; i < listaM.size(); i++) {
                                                                 marca marca = listaM.get(i);
                                                         %>
@@ -81,9 +79,9 @@
 
                                                     <label for="categoria" class="col-form-label">Categoria</label>
                                                     <!-- <input type="text" class="form-control" id="observacion" name="txtObsv">  -->
-                                                    <select class="form-select" aria-label="Default select example" name="select_cat">
-                                                        <option selected>Elegir categoria</option>
-                                                        <%  
+                                                    <select class="form-select" aria-label="Default select example" name="select_cat" required>
+                                                        <option selected disabled>Elegir categoria</option>
+                                                        <%
                                                             ArrayList<categoria> listaC = (ArrayList<categoria>) request.getAttribute("listaC");
                                                             for (int i = 0; i < listaC.size(); i++) {
                                                                 categoria cat = listaC.get(i);
@@ -98,9 +96,9 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="proveedor" class="col-form-label">Proveedor</label>
                                                     <!-- <input type="text" class="form-control" id="proveedor" name="txtProv"> -->
-                                                    <select class="form-select" aria-label="Default select example" name="select_prov">
-                                                        <option selected>Elegir proveedor</option>
-                                                        <%  
+                                                    <select class="form-select" aria-label="Default select example" name="select_prov" required>
+                                                        <option selected disabled>Elegir proveedor</option>
+                                                        <%
                                                             ArrayList<proveedor> listaP = (ArrayList<proveedor>) request.getAttribute("listaP");
                                                             for (int i = 0; i < listaP.size(); i++) {
                                                                 proveedor prov = listaP.get(i);
@@ -145,9 +143,9 @@
                                                 <div class="col-md-6 form-group">
                                                     <label for="producto" class="col-form-label">Producto</label>
                                                     <!--<input type="text" class="form-control" id="producto" name="txtProd"> -->
-                                                    <select class="form-select" aria-label="Default select example" name="select_prod">
-                                                        <option selected>Elegir producto</option>
-                                                        <%  
+                                                    <select class="form-select" aria-label="Default select example" name="select_prod" required>
+                                                        <option selected disabled>Elegir producto</option>
+                                                        <%
                                                             ArrayList<producto> lista = (ArrayList<producto>) request.getAttribute("lista");
                                                             for (int i = 0; i < lista.size(); i++) {
                                                                 producto prod = lista.get(i);
@@ -160,7 +158,7 @@
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="cantidad" class="col-form-label">Cantidad</label>
-                                                    <input type="text" class="form-control" id="cantdad" name="txtCant">
+                                                    <input type="text" class="form-control" id="cantdad" name="txtCant" required>
                                                 </div>
                                                 <div class="col-md-6 form-group">
                                                     <label for="vencimiento" class="col-form-label">Fecha de Vencimiento</label>
@@ -181,10 +179,14 @@
                     </div>
 
                     <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                    </div>
+                    
+                    <form class="buscador" method="post" action="ProductoController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="buscar" required>
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                        </div>
+                    </form>
+
                 </div>
 
                 <!-- Tabla de productos -->
@@ -197,6 +199,7 @@
                                 <th scope="col">PRECIO</th>
                                 <th scope="col">CANTIDAD</th>
                                 <th scope="col">CATEGORIA</th>
+                                <th scope="col">ACCIÓN</th>
                             </tr>
                         </thead>
                         <tbody>                            
@@ -211,6 +214,108 @@
                                 <td><%=prod.getPrecio()%></td>
                                 <td><%=prod.getCantidad()%></td>
                                 <td><%=prod.getCategoria()%></td>
+                                <td>
+                                    <!-- Toolbar -->
+                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                        <div class="btn-group mr-2" role="group" aria-label="Basic example">
+
+                                            <!-- Button trigger modal - Editar-->
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalEditar<%=i%>">Editar</button>
+                                            <div class="modal fade" id="modalEditar<%=i%>" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <form method="post" action="ProductoController?op=editar&idC=<%=prod.getCodigo()%>">
+
+                                                            <!-- Titulo del modal -->
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="ModalLabel">Editar Marca</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+
+                                                            <!-- Cuerpo del modal -->
+                                                            <div class="modal-body">                                   
+                                                                <div class="row">                              
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="producto" class="col-form-label">Producto</label>
+                                                                        <input type="text" class="form-control" id="productoEdit" name="txtProdEdit" value="<%=prod.getDescripcion()%>" required>
+                                                                    </div>
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="precio" class="col-form-label">Precio</label>
+                                                                        <input type="text" class="form-control" id="precioEdit" name="txtPrecioEdit" value="<%=prod.getPrecio()%>" required>
+                                                                    </div>
+
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="marca" class="col-form-label">Marca</label>
+                                                                        <!-- <input type="text" class="form-control" id="marca" name="txtMarca">  -->
+                                                                        <select class="form-select" aria-label="Default select example" name="select_marcaEdit" required>
+                                                                            <option selected disabled>Elegir marca</option>
+                                                                            <%
+                                                                                ArrayList<marca> listaME = (ArrayList<marca>) request.getAttribute("listaM");
+                                                                                for (int j = 0; j < listaME.size(); j++) {
+                                                                                    marca marca = listaME.get(j);
+                                                                                    
+                                                                            %>
+                                                                            <option value="<%=marca.getCodigo()%>"><%=marca.getNombre()%></option>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                        </select>
+
+
+                                                                    </div>
+                                                                    <div class="col-md-6 form-group">
+
+                                                                        <label for="categoria" class="col-form-label">Categoria</label>
+                                                                        <!-- <input type="text" class="form-control" id="observacion" name="txtObsv">  -->
+                                                                        <select class="form-select" aria-label="Default select example" name="select_catEdit" required>
+                                                                            <option selected disabled>Elegir categoria</option>
+                                                                            <%
+                                                                                ArrayList<categoria> listaCE = (ArrayList<categoria>) request.getAttribute("listaC");
+                                                                                for (int j = 0; j < listaC.size(); j++) {
+                                                                                    categoria cat = listaCE.get(j);
+                                                                            %>
+                                                                            <option value="<%=cat.getCodigo()%>"><%=cat.getNombre()%></option>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                        </select>
+
+                                                                    </div>
+                                                                    <div class="col-md-6 form-group">
+                                                                        <label for="proveedor" class="col-form-label">Proveedor</label>
+                                                                        <!-- <input type="text" class="form-control" id="proveedor" name="txtProv"> -->
+                                                                        <select class="form-select" aria-label="Default select example" name="select_provEdit" required>
+                                                                            <option selected disabled>Elegir proveedor</option>
+                                                                            <%
+                                                                                ArrayList<proveedor> listaPE = (ArrayList<proveedor>) request.getAttribute("listaP");
+                                                                                for (int j = 0; j < listaPE.size(); j++) {
+                                                                                    proveedor prov = listaPE.get(j);
+                                                                            %>
+                                                                            <option value="<%=prov.getId()%>"><%=prov.getEmpresa()%></option>
+                                                                            <%
+                                                                                }
+                                                                            %>
+                                                                        </select>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- Agregar Producto -->
+                                                                <div class="form-group mt-3">
+                                                                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Button trigger modal - Eliminar-->                    
+
+                                            <a onclick="return confirm('¿Esta seguro de eliminar este registro?')" href="ProductoController?op=eliminar&idE=<%=prod.getCodigo()%>" class="btn btn-danger link-light" style="text-decoration: none">Eliminar</a>
+                                        </div>                           
+                                    </div>
+                                </td>
                             </tr>
                             <%
                                 }
@@ -221,5 +326,5 @@
             </div>
         </main>
     </body>
-    
+
 </html>

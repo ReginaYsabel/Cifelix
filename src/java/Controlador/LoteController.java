@@ -7,15 +7,14 @@ package Controlador;
 import Modelo.lote;
 import Utils.ConDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Rem
  */
+@WebServlet("/LoteController")
 public class LoteController extends HttpServlet {
     Connection cn = ConDB.getConnection();
 
@@ -74,7 +74,6 @@ public class LoteController extends HttpServlet {
                 while (rs.next()) {
                     Date fecha = rs.getDate(4);
                     int dias = (int) ((fecha.getTime() - fechaActual.getTime()) / milisecondsByDay);
-                    log("" + dias);
                     if (dias == 5 || dias == 4 || dias == 3 || dias == 2 || dias == 1) {
                         estado = "Proximo a vencer";
                         lote lot = new lote(rs.getInt(1), rs.getInt(2), rs.getInt(3), fecha, estado);

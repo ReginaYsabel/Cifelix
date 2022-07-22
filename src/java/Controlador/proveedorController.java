@@ -5,26 +5,22 @@
  */
 package Controlador;
 
-import Modelo.Empleado;
+import Modelo.proveedor;
+import Utils.ConDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import Utils.ConDB;
-import java.sql.SQLException;
-import javax.servlet.annotation.WebServlet;
 
 /**
  *
  * @author AMVM_
  */
-@WebServlet(name = "empleadosController", urlPatterns = {"/empleadosController"})
-public class empleadosController extends HttpServlet {
+public class proveedorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,23 +51,24 @@ public class empleadosController extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         
-          String op = request.getParameter("op"); 
+        //Parametro que elige la operacion a realizar
+        String op = request.getParameter("op"); 
         
         //Opcion listar
         if (op.equals("listar")) {
             try {
 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from trabajador");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from proveedor");
                 ResultSet rs = sta.executeQuery();
 
-                ArrayList<Empleado> lista = new ArrayList<>();
+                ArrayList<proveedor> lista = new ArrayList<>();
 
                 while (rs.next()) {
-                    Empleado emp = new Empleado(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6), rs.getDouble(7));
-                    lista.add(emp);
+                    proveedor prov = new proveedor(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6));
+                    lista.add(prov);
                 }
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("Empleados.jsp").forward(request, response);
+                request.getRequestDispatcher("proveedores.jsp").forward(request, response);
             } catch (Exception e) {
                 System.out.println("Error al mostrar elmentos");
             }
@@ -81,17 +78,19 @@ public class empleadosController extends HttpServlet {
         else if (op.equals("eliminar")) {
             try {
                 int id = Integer.parseInt(request.getParameter("idE"));
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("delete from trabajador where id_trabajador=?");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("delete from proveedor where id_Proveedor=?");
                 sta.setInt(1, id);
                 sta.executeUpdate();
-                request.getRequestDispatcher("empleadosController?op=listar").forward(request, response);
+                request.getRequestDispatcher("proveedorController?op=listar").forward(request, response);
             } catch (IOException | SQLException | ServletException e) {
                  System.out.println("Error al eliminar elementos");
             }
         }
         
+        
     }
-     /**
+
+    /**
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
@@ -99,56 +98,51 @@ public class empleadosController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     
+        //Parametro que elige la operacion a realizar
         String op = request.getParameter("op");
 
         //Opcion editar
         if (op.equals("editar")) {
             int id = Integer.parseInt(request.getParameter("idC"));
             String nom = request.getParameter("txtENom");
-            int DNI = Integer.parseInt(request.getParameter("txtEDNI"));
-            String per= request.getParameter("txtEPer");
+            String emp = request.getParameter("txtEEmp");
+            int cel= Integer.parseInt(request.getParameter("txtECel"));
             String cor=request.getParameter("txtECor");
-            String pas=request.getParameter("txtEPas");
-            double sue=Double.parseDouble(request.getParameter("txtSue"));
+            String dir=request.getParameter("txtEDir");
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("update trabajador set Nom_Ape=?, DNI=?, perfil=?, correo=? ,password=?, sueldo=? where id_trabajador=?");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("update proveedor set Nom_Ape=?, empresa=?, celular=?, correo=? ,direccion=? where id_Proveedor=?");
                 sta.setString(1, nom);
-                sta.setInt(2, DNI);
-                sta.setString(3, per);
+                sta.setString(2, emp);
+                sta.setInt(3, cel);
                 sta.setString(4, cor);
-                sta.setString(5, pas);
-                sta.setDouble(6, sue);
-                sta.setInt(7, id);
+                sta.setString(5, dir);
+                sta.setInt(6, id);
                 sta.executeUpdate();
-                request.getRequestDispatcher("empleadosController?op=listar").forward(request, response);
+                request.getRequestDispatcher("proveedorController?op=listar").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al actualizar elemento");
             }
         } 
-        
-        //Opcion listar
         else if (op.equals("listar")) {
             try {
 
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from trabajador");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("select * from proveedor");
                 ResultSet rs = sta.executeQuery();
 
-                ArrayList<Empleado> lista = new ArrayList<>();
+                ArrayList<proveedor> lista = new ArrayList<>();
 
                 while (rs.next()) {
-                    Empleado emp = new Empleado(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6), rs.getDouble(7));
-                    lista.add(emp);
+                    proveedor prov = new proveedor(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6));
+                    lista.add(prov);
                 }
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("Empleados.jsp").forward(request, response);
+                request.getRequestDispatcher("proveedores.jsp").forward(request, response);
             } catch (Exception e) {
                 System.out.println("Error al mostrar elmentos");
             }
@@ -157,21 +151,19 @@ public class empleadosController extends HttpServlet {
          //Opcion insertar
         else if (op.equals("insertar")) {
             String nom = request.getParameter("txtNom");
-            String DNI = request.getParameter("txtDNI");
-            int per= Integer.parseInt(request.getParameter("txtPer"));
+            String emp = request.getParameter("txtEmp");
+            int cel= Integer.parseInt(request.getParameter("txtCel"));
             String cor=request.getParameter("txtCor");
-            String pas=request.getParameter("txtPas");
-            double sue=Double.parseDouble(request.getParameter("txtSue"));
+            String dir=request.getParameter("txtDir");
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into trabajador (Nom_Ape,DNI,perfil,correo,password, sueldo) values(?,?,?,?,?,?)");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into proveedor (Nom_Ape,empresa,celular,correo,direccion) values(?,?,?,?,?)");
                 sta.setString(1, nom);
-                sta.setString(2, DNI);
-                sta.setInt(3, per);
+                sta.setString(2, emp);
+                sta.setInt(3, cel);
                 sta.setString(4, cor);
-                sta.setString(5, pas);
-                sta.setDouble(6,sue);
+                sta.setString(5, dir);
                 sta.executeUpdate();
-                request.getRequestDispatcher("empleadosController?op=listar").forward(request, response);
+                request.getRequestDispatcher("proveedorController?op=listar").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al insertar elemento");
@@ -180,7 +172,11 @@ public class empleadosController extends HttpServlet {
     
     }
 
-   
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

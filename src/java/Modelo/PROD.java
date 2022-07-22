@@ -5,14 +5,17 @@
  */
 package Modelo;
 
-public class categoria {
+
+public class PROD {
     private int codigo;
-    private String nombre;
+    private String Nombre;
+    private double precio;
     private int cantidad;
 
-    public categoria(int codigo, String nombre, int cantidad) {
+    public PROD(int codigo, String Nombre, double precio, int cantidad) {
         this.codigo = codigo;
-        this.nombre = nombre;
+        this.Nombre = Nombre;
+        this.precio = precio;
         this.cantidad = cantidad;
     }
 
@@ -25,11 +28,19 @@ public class categoria {
     }
 
     public String getNombre() {
-        return nombre;
+        return Nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
     public int getCantidad() {
@@ -39,9 +50,5 @@ public class categoria {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-
-   
-
-
     
 }
