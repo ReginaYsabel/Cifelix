@@ -1,9 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<script src="https://kit.fontawesome.com/9bdc09ed99.js" crossorigin="anonymous"></script>
+<link href="Sets/CSS/Estilos.css" rel="stylesheet" type="text/css"/>
+
+<nav class="cabe navbar navbar-expand-lg navbar-dark bg-primary fixed-top ">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasExample" >
             <span class="navbar-toggler-icon" data-bs-target="#sidebar"></span>
         </button>
-        <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"  href="#">FERRETERIA LILY</a>
+        <a class="navbar-brand me-auto ms-lg-0 ms-3 text-uppercase fw-bold"  href="#" >FERRETERIA LILY</a>
 
         <div class="collapse navbar-collapse">
 
@@ -18,7 +21,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle ms-2" href="#" role="button" data-bs-toggle="dropdown" >
-                        <i class="fas fa-user"></i>
+                        <i class="icon fas fa-user"></i> &nbsp;<%=usuario%>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="logiController?op=cerrar">Cerrar cesión</a></li>
@@ -34,12 +37,12 @@
         <nav class="navbar-dark">
             <ul class="navbar-nav">
                 <li>
-                    <div class="text-success small fw-bold text-uppercase px-3 text-light"> Bienvenido: </div>
+                    &nbsp;
                 </li>
                 <li>
                     <a href="Index.jsp" class="nav-link px-3 active">
                         <span class="me-2"><i class="bi bi-speedometer2"></i></span>
-                        <span class="me-2">INICIO <i class="fa-solid fa-house-chimney "></i></span>
+                        <span class="me-2"><i class="fa-solid fa-house-chimney "></i> &nbsp; INICIO </span>
                     </a>
                 </li>
             </ul>
@@ -49,7 +52,7 @@
             <div class="accordion-item ">
                 <h2 class="accordion-header" id="flush-headingOne">
                     <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                        ALMACEN
+                        <i class="icon fa-solid fa-warehouse"></i> &nbsp; ALMACEN
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
@@ -68,7 +71,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingTwo">
                     <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                        COTIZACION
+                        <i class="icon fa-solid fa-money-check-dollar"></i> &nbsp; COTIZACION
                     </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -85,13 +88,13 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
                     <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                        VENTAS
+                        <span> <i class="icon fa-solid fa-tag"></i>&nbsp; VENTAS </span>
                     </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista">Ventas diarias </li>
+                            <li class="lista"><a class="nav-link link-dark" href="cotizacionController?op=listar">Realizar Ventas</a> </li>
                             <li class="lista">Ventas del Mes</li>
                             <li class="lista">ventas Realizadas</li>
                         </ul>
@@ -100,35 +103,19 @@
                 </div>
             </div>
 
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingfour">
-                    <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefour" aria-expanded="false" aria-controls="flush-collapsefour">
-                        APARTADOS
-                    </button>
-                </h2>
-                <div id="flush-collapsefour" class="accordion-collapse collapse" aria-labelledby="flush-headingfour" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        <ul>
-                            <li class="lista">Apartar productos</li>
-                            <li class="lista">Apartados por fecha</li>
-                            <li class="lista">consultar</li>
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingfive">
                     <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsefive" aria-expanded="false" aria-controls="flush-collapsefive">
-                        INVENTARIOS
+                        <i class="icon fa-solid fa-file-invoice-dollar"></i> &nbsp; REPORTES
                     </button>
                 </h2>
                 <div id="flush-collapsefive" class="accordion-collapse collapse" aria-labelledby="flush-headingfive" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">Abrir nuevo inventario</a></li>
-                            <li class="lista">Eliminar inventario</li>
+                           <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">R. produc vendidos</a></li>
+                            <li class="lista"><a class="nav-link text-dark" href="proveedorController?op=listar">Lista Proveedores</a></li>
                         </ul>
 
                     </div>
@@ -139,14 +126,13 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="flush-headingsix">
                         <button class="menu accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsesix" aria-expanded="false" aria-controls="flush-collapsesix">
-                            TRABAJADORES
+                            <i class="icon fa-solid fa-arrows-down-to-people"></i> &nbsp; TRABAJADORES
                         </button>
                     </h2>
                     <div id="flush-collapsesix" class="accordion-collapse collapse" aria-labelledby="flush-headingsix" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="lista"><a class="nav-link text-dark" href="usuariosController?US=listar">Lista de Usuarios</a></li>
-                                <li class="lista"><a class="nav-link text-dark" href="empleadosController?op=listar">Trabajadores</a></li>
+                                <li class="lista"><a class="nav-link text-dark" href="empleadosController?op=listar"><i class="icon fa-solid fa-user-pen"></i> &nbsp; Trabajadores</a></li>
                             </ul>
                         </div>
                     </div>
@@ -155,7 +141,6 @@
 
 
         </div>
-
 
     </div>
 </div>

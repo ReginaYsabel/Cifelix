@@ -1,33 +1,28 @@
 
 package Modelo;
 
+import java.sql.Date;
+
 public class cotizacion 
 {
-  private int id_detC;
+ 
   private int id_cot;
-  private int id_Pro;	
-  private int cantidad;
-  private double precio,total,IGV,Pre_total;
-  private String nombre;
+   private String nombre;
+  private int DNI;	
+  private int celular;
+  private String direccion, fecha;
+  private double subtotal, igv, total;
 
-    public cotizacion(int id_detC, int id_cot, int id_Pro, int cantidad, double precio, double total, double IGV, double Pre_total, String nombre) {
-        this.id_detC = id_detC;
+    public cotizacion(int id_cot, String nombre, int DNI, int celular, String direccion, String fecha, double subtotal, double igv, double total) {
         this.id_cot = id_cot;
-        this.id_Pro = id_Pro;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.total = total;
-        this.IGV = IGV;
-        this.Pre_total = Pre_total;
         this.nombre = nombre;
-    }
-
-    public int getId_detC() {
-        return id_detC;
-    }
-
-    public void setId_detC(int id_detC) {
-        this.id_detC = id_detC;
+        this.DNI = DNI;
+        this.celular = celular;
+        this.direccion = direccion;
+        this.fecha = fecha;
+        this.subtotal = subtotal;
+        this.igv = igv;
+        this.total = total;
     }
 
     public int getId_cot() {
@@ -38,28 +33,60 @@ public class cotizacion
         this.id_cot = id_cot;
     }
 
-    public int getId_Pro() {
-        return id_Pro;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setId_Pro(int id_Pro) {
-        this.id_Pro = id_Pro;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public int getDNI() {
+        return DNI;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setDNI(int DNI) {
+        this.DNI = DNI;
     }
 
-    public double getPrecio() {
-        return precio;
+    public int getCelular() {
+        return celular;
     }
 
-    public void setPrecio(double precio) {
-        this.precio = precio;
+    public void setCelular(int celular) {
+        this.celular = celular;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public double getIgv() {
+        return igv;
+    }
+
+    public void setIgv(double igv) {
+        this.igv = igv;
     }
 
     public double getTotal() {
@@ -69,30 +96,9 @@ public class cotizacion
     public void setTotal(double total) {
         this.total = total;
     }
+  
 
-    public double getIGV() {
-        return IGV;
-    }
-
-    public void setIGV(double IGV) {
-        this.IGV = IGV;
-    }
-
-    public double getPre_total() {
-        return Pre_total;
-    }
-
-    public void setPre_total(double Pre_total) {
-        this.Pre_total = Pre_total;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+   
 
     
   
