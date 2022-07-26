@@ -25,7 +25,8 @@
                         <form class="form-horizontal" role="form" id="datos_cotizacion">
                             <div class="form-group row">
                                 <label for="atencion" class="col-md-1 control-label">Nombre:</label>
-                                <div class="col-md-3">
+                          
+                               <div class="col-md-3">
                                     <input type="text" class="form-control" id="atencion"  name="Nom" placeholder="Atención" required>
                                 </div>
                                 <label for="tel1" class="col-md-1 control-label">Teléfono:</label>
@@ -151,7 +152,7 @@
                                 %>
                                 <form>
                                      <tr>
-                                    <td name=""><%=d.getCod()%></td>
+                                    <td name="txCod"><%=d.getCod()%></td>
                                     <td name="txNom"><%=d.getNom()%></td>
                                     <td name="txPre"><%=d.getPre()%></td>
                                     <td name="txCan"><a href="ventaController?op=menos&fila=<%=j%>&cod<%=j%>=<%=d.getCod()%>&nom<%=j%>=<%=d.getNom()%>&pre<%=j%>=<%=d.getPre()%>" class="btn btn-danger">-</a> <%=d.getCan()%> <a href="ventaController?op=mas&fila=<%=j%>&cod<%=j%>=<%=d.getCod()%>&nom<%=j%>=<%=d.getNom()%>&pre<%=j%>=<%=d.getPre()%>" class="btn btn-primary">+</a> </td>

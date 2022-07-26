@@ -128,11 +128,6 @@
 
                                                 </div>
                                             </div>
-                                        </div>                    
-                                        <button type="button" class="btn btn-danger" onclick="print()">Imprimir</button>   
-                                    </div>	     
-                                </div>
-                            	
                         </div>
                     </div>	
                 </div>
@@ -201,3 +196,8 @@
         </main>
     </body>
 </html>
+                                        </div>                    
+                                        <button type="button" class="btn btn-danger" onclick="print()">Imprimir</button>   
+                                    </div>	     
+                                </div>
+                            	

@@ -113,7 +113,7 @@
                         <ul>
                             <li class="lista"><a class="nav-link link-dark" href="ventaController?op=listar">Realizar Ventas</a> </li>
                           
-                            <li class="lista">ventas Realizadas</li>
+                            <li class="lista"><a class="nav-link link-dark" href="ventaController?op=lisv">Ventas Realizadas</a></li>
                         </ul>
 
                     </div>
