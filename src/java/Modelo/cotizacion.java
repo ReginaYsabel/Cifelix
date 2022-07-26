@@ -10,19 +10,18 @@ public class cotizacion
    private String nombre;
   private int DNI;	
   private int celular;
-  private String direccion, fecha;
-  private double subtotal, igv, total;
+  private String direccion;
+  private int idtrab;
+  private String fecha;
 
-    public cotizacion(int id_cot, String nombre, int DNI, int celular, String direccion, String fecha, double subtotal, double igv, double total) {
+    public cotizacion(int id_cot, String nombre, int DNI, int celular, String direccion, int idtrab, String fecha) {
         this.id_cot = id_cot;
         this.nombre = nombre;
         this.DNI = DNI;
         this.celular = celular;
         this.direccion = direccion;
+        this.idtrab = idtrab;
         this.fecha = fecha;
-        this.subtotal = subtotal;
-        this.igv = igv;
-        this.total = total;
     }
 
     public int getId_cot() {
@@ -65,6 +64,14 @@ public class cotizacion
         this.direccion = direccion;
     }
 
+    public int getIdtrab() {
+        return idtrab;
+    }
+
+    public void setIdtrab(int idtrab) {
+        this.idtrab = idtrab;
+    }
+
     public String getFecha() {
         return fecha;
     }
@@ -73,33 +80,4 @@ public class cotizacion
         this.fecha = fecha;
     }
 
-    public double getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(double subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public double getIgv() {
-        return igv;
-    }
-
-    public void setIgv(double igv) {
-        this.igv = igv;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
-  
-
-   
-
-    
-  
 }

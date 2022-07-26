@@ -6,7 +6,7 @@
 <%@page import="Modelo.Cotizar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.PROD"%>
-<%@page session="true"%>
+<%@include file="user.jsp" %>%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +15,9 @@
         <title>JSP Page</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">    
         <link href="Sets/CSS/Estilos.css" rel="stylesheet" type="text/css"/>
+         <script src="https://kit.fontawesome.com/9bdc09ed99.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -34,15 +34,15 @@
                             <div class="form-group row">
                                 <label for="atencion" class="col-md-1 control-label">Nombre:</label>
                                 <div class="col-md-3">
-                                    <input type="text" class="form-control" id="atencion" placeholder="Atención" required>
+                                    <input type="text" class="form-control" id="atencion" placeholder="Atención" >
                                 </div>
                                 <label for="tel1" class="col-md-1 control-label">Teléfono:</label>
                                 <div class="col-md-2">
-                                    <input type="text" class="form-control" id="tel1" placeholder="Teléfono" required>
+                                    <input type="text" class="form-control" id="tel1" placeholder="Teléfono" >
                                 </div>
                                 <label for="fecha" class="col-md-1 control-label">fecha:</label>
                                 <div class="col-md-2">
-                                    <input type="date" class="form-control" id="decha"  required>
+                                    <input type="date" class="form-control" id="decha" >
                                 </div>
                             </div> &nbsp;
 
@@ -65,7 +65,7 @@
                             <div class="col-md-12">
                                 <div class="pull-right">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><a href="cotizacionController?op=listar"></a> Productos</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><a href="cotizacionController?op=listar"></a><i class="fa-solid fa-plus"></i> Productos</button>
                                     <!-- Modal -->
                                     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -75,13 +75,7 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <!-- buscardor-->
-                                                    <form class="d-flex ms-4 my-1 my-lg-0">
-                                                        <div class="input-group">
-                                                            <input class="form-control" type="search" placeholder="Buscar" aria-label="Search"/>
-                                                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
-                                                        </div>
-                                                    </form>
+                                                    
                                                     &nbsp;&nbsp;
                                                     
                                                         <table class="table table-striped table-bordered wd-100 text-center">
@@ -127,7 +121,7 @@
                                             </div>
                                         </div>
                                     </div>                    
-                                    <button type="button" class="btn btn-danger" onclick="print()">Imprimir</button>   
+                                        <button type="button" class="btn btn-danger" onclick="print()"><i class="fa-solid fa-print"></i>&nbsp; Imprimir</button>   
                                 </div>	     
                             </div>
                         </form>	
@@ -151,9 +145,7 @@
                                     <th>Monto</th>
                                 </tr>
                                 <%
-                                    double subtotal = 0, igv = 0, total = 0, i = 0, t = 0;
                                     ArrayList<Cotizar> list = (ArrayList<Cotizar>) session.getAttribute("carrito");
-                                    if (list != null) {
                                         for (int j = 0; j < list.size(); j++) {
                                                 Cotizar d = list.get(j);                                   
                                 %>
@@ -167,35 +159,29 @@
                                 </form>
                                     
                                 </tr>
-                                <%
-                                            subtotal = subtotal + (d.getPre() * d.getCan());
-                                        }
-                                        igv = subtotal * 0.18;
-                                        i = Math.round(igv * 100.0) / 100.0;
-                                        total = subtotal + igv;
-                                        t = Math.round(total * 100.0) / 100.0;
-                                    }
+                                <%  
+                                       }                                     
                                 %>               
                             </table>
                         </div> 
                         <div class="col-sm-4">
-                            <form>
+                            <form action="categoriaController">
                                 <div class="card">
                                     <div class="card-header bg-primary">
                                         <p class="h5 text-light text-center">Generar Calculos</p>
                                     </div>
                                     <div class="card-body">
                                         <label class="fw-bold">Subtotal</label>
-                                        <input type="text" value="<%=subtotal%>" name="txtst" class="form-control" readonly>
+                                        <input type="text" value="S/<%=request.getAttribute("subtotal")%>" name="txtst" class="form-control" readonly>
                                         <label class="fw-bold">Igv</label>
-                                        <input type="text" value="S/<%=i%>" class="form-control " disabled>
+                                        <input type="text" value="S/<%=request.getAttribute("i")%>" name="=txtIGV" class="form-control " disabled>
                                         <label class="fw-bold">Total</label>
-                                        <input type="text" value="<%=t%>" name="txtT"  class="form-control " readonly>
+                                        <span><input type="text" value="S/<%=request.getAttribute("t")%>" name="txtT"  class="form-control " readonly></span>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-danger w-100 fw-bold mt-2">Guardar Cotización</button>   
+                                        <button type="submit"  class="btn btn-danger w-100 fw-bold mt-2"><a href="cotizacionController?op=calcular" class="nav-link link-light"><i class="fa-solid fa-floppy-disk"></i>&nbsp; Calcular Cotización</a></button>   
                                     </div>
-                                    <input type="hidden" name="ope" value="Registrar" >                    
+                                                        
                                 </div>  
                             </form>
                         </div>

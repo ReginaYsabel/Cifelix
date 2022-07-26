@@ -1,6 +1,6 @@
 <script src="https://kit.fontawesome.com/9bdc09ed99.js" crossorigin="anonymous"></script>
 <link href="Sets/CSS/Estilos.css" rel="stylesheet" type="text/css"/>
-
+ <script src="https://kit.fontawesome.com/9bdc09ed99.js" crossorigin="anonymous"></script>
 <nav class="cabe navbar navbar-expand-lg navbar-dark bg-primary fixed-top ">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasExample" >
@@ -11,12 +11,7 @@
         <div class="collapse navbar-collapse">
 
             <form class="d-flex ms-auto my-3 my-lg-0">
-                <div class="input-group">
-                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search"/>
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
+                
             </form>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
@@ -94,8 +89,8 @@
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista"><a class="nav-link link-dark" href="cotizacionController?op=listar">Realizar Ventas</a> </li>
-                            <li class="lista">Ventas del Mes</li>
+                            <li class="lista"><a class="nav-link link-dark" href="ventaController?op=listar">Realizar Ventas</a> </li>
+                          
                             <li class="lista">ventas Realizadas</li>
                         </ul>
 

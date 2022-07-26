@@ -1,5 +1,6 @@
 <%@page import="Modelo.inventario"%>
 <%@page import="java.util.ArrayList"%>
+<%@ include file="user.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,17 +22,17 @@
                 <!-- Titulo-->
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>INVENTARIO</h4>
+                        <h4>Reporte de catidad vendida</h4>
                     </div>
                 </div> 
 
-                <!-- Buscador  -->
-                <div>
-                    <div class="input-group mt-3">                     
-                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                    </div>
-                </div>
+                <!-- Buscador -->
+                    <form class="buscador" method="post" action="InventarioController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="buscar">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                        </div>
+                    </form>
 
                 <!-- Tabla de categorias -->
                 <div class="tabla row text-center">
@@ -65,7 +66,8 @@
                             %>
                             
                         </tbody>
-                    </table>
+                    </table>    
+                            
                 </div>
             </div>
         </main>

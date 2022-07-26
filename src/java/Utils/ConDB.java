@@ -9,7 +9,7 @@ public class ConDB {
         Connection cn = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            cn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/ferreteria", "root", "");
+            cn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/ferreteria_1", "root", "");
             System.out.println("Conexion Satisfactoria");
 
         } catch (Exception e) {

@@ -49,6 +49,10 @@
         <servlet-name>cotizacionController</servlet-name>
         <servlet-class>Controlador.cotizacionController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ventaController</servlet-name>
+        <servlet-class>Controlador.ventaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CategoriaController</servlet-name>
         <url-pattern>/CategoriaController</url-pattern>
@@ -90,6 +94,10 @@
     <servlet-mapping>
         <servlet-name>cotizacionController</servlet-name>
         <url-pattern>/cotizacionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ventaController</servlet-name>
+        <url-pattern>/ventaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

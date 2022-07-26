@@ -169,6 +169,28 @@ public class proveedorController extends HttpServlet {
                 System.out.println("Error al insertar elemento");
             }
         }
+        
+        else if(op.equals("consultar")){
+            
+            String nombre=request.getParameter("buscar");
+            try{
+                PreparedStatement sta=ConDB.getConnection().prepareStatement("select * from proveedor where Nom_Ape like ?");
+                sta.setString(1, "%"+nombre+"%");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<proveedor> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    proveedor prov = new proveedor(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getString(6));
+                    lista.add(prov);
+                }
+                request.setAttribute("lista", lista);
+                request.getRequestDispatcher("proveedores.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.out.println("Error al mostrar elmentos: "+e);
+            }
+        }
+        
     
     }
 

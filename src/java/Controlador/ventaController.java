@@ -6,7 +6,9 @@
 package Controlador;
 
 import Modelo.PROD;
-import Modelo.Cotizar;
+
+import Modelo.det_venta;
+import Modelo.venta;
 import Utils.ConDB;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +28,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author AMVM_
  */
-public class cotizacionController extends HttpServlet {
+public class ventaController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,13 +41,10 @@ public class cotizacionController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //response.setContentType("text/html;charset=UTF-8");
-   
-    
-    
-   
+        
+        
     }
-       
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -56,8 +57,9 @@ public class cotizacionController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
-        String op = request.getParameter("op");
+        processRequest(request, response);
+        
+         String op = request.getParameter("op");
         //Opcion listar
         if (op.equals("listar")) {
             try {
@@ -74,22 +76,22 @@ public class cotizacionController extends HttpServlet {
                     lista.add(pro);
                 }
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("Cotizacion.jsp").forward(request, response);
+                request.getRequestDispatcher("venta.jsp").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al mostrar elmentos" +e);
-            }
+            } 
         } 
         
         else if(op.equals("agregar")){
              
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito;
+            ArrayList<det_venta> carr;
             
-            if(sesion.getAttribute("carrito")==null){
-                carrito=new ArrayList<Cotizar>();
+            if(sesion.getAttribute("carr")==null){
+                carr=new ArrayList<det_venta>();
             }else{
-                carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+                carr=(ArrayList<det_venta>)sesion.getAttribute("carr");
             }
             
             int fila = Integer.parseInt(request.getParameter("fila"));
@@ -102,8 +104,8 @@ public class cotizacionController extends HttpServlet {
             int indice=-1;
             int can=0;
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     indice=i;
                     can=c2.getCan();
@@ -111,106 +113,74 @@ public class cotizacionController extends HttpServlet {
                 }
             }
             if(indice==-1){
-                Cotizar c=new Cotizar(cod, nom, pre, canDet);
-                carrito.add(c);
+                det_venta c=new det_venta(cod, nom, pre, canDet);
+                carr.add(c);
             }else{
                 int can2=can+canDet;
-                Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                carrito.set(indice, c3);
+                det_venta c3=new det_venta(cod,nom,pre,can2);
+                carr.set(indice, c3);
             }
             
-            sesion.setAttribute("carrito", carrito);
-            log("Tamañoooooo: "+carrito.size());
-            request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
+            sesion.setAttribute("carr", carr);
+            log("Tamañoooooo: "+carr.size());
+            request.getRequestDispatcher("ventaController?op=listar").forward(request, response);
             
             
             
         }else if(op.equals("menos")){
             int fila = Integer.parseInt(request.getParameter("fila"));
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+            ArrayList<det_venta> carr=(ArrayList<det_venta>)sesion.getAttribute("carr");
             
             String cod=request.getParameter("cod"+fila);
             String nom=request.getParameter("nom"+fila);
             double pre=Double.parseDouble(request.getParameter("pre"+fila));
 
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     if(c2.getCan()>0){
                         int can2=c2.getCan()-1;
-                        Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                        carrito.set(i, c3);
+                        det_venta c3=new det_venta(cod,nom,pre,can2);
+                        carr.set(i, c3);
                     }
                     break;
                 }
             }
 
             
-            sesion.setAttribute("carrito", carrito);
-             request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);           
+            sesion.setAttribute("carr", carr);
+             request.getRequestDispatcher("ventaController?op=listar").forward(request, response);           
     }
         else if(op.equals("mas")){
             int fila = Integer.parseInt(request.getParameter("fila"));
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+            ArrayList<det_venta> carr=(ArrayList<det_venta>)sesion.getAttribute("carrito");
             
             String cod=request.getParameter("cod"+fila);
             String nom=request.getParameter("nom"+fila);
             double pre=Double.parseDouble(request.getParameter("pre"+fila));
 
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     if(c2.getCan()>0){
                         int can2=c2.getCan()+1;
-                        Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                        carrito.set(i, c3);
+                        det_venta c3=new det_venta(cod,nom,pre,can2);
+                        carr.set(i, c3);
                     }
                     break;
                 }
             }
            
-            sesion.setAttribute("carrito", carrito);
-             request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);             
+            sesion.setAttribute("carr", carr);
+             request.getRequestDispatcher("ventaController?op=listar").forward(request, response);             
     }
         
-            else  if(op.equals("calcular")){
-        
-             HttpSession session = request.getSession();
-         
-            double subtotal = 0, igv = 0, total = 0, i = 0, t = 0;
-            ArrayList<Cotizar> list = (ArrayList<Cotizar>) session.getAttribute("carrito");
-                                    if (list != null) {
-                                        for (int j = 0; j < list.size(); j++) {
-                                                Cotizar d = list.get(j);   
-             
-                    
-
-                     subtotal = subtotal + (d.getPre() * d.getCan());
-             }
-                                        igv = subtotal * 0.18;
-                                        i = Math.round(igv * 100.0) / 100.0;
-                                        total = subtotal + igv;
-                                        t = Math.round(total * 100.0) / 100.0;
-
-        
-        
-        
-        
-            request.setAttribute("subtotal", subtotal);
-            request.setAttribute("igv", igv);
-            request.setAttribute("i", i);
-            request.setAttribute("total", total);
-            request.setAttribute("t", t);
-        
-        request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
-        }  
-    }
+           
      
-      
     }
 
     /**
@@ -224,7 +194,8 @@ public class cotizacionController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+        processRequest(request, response);
+        
         String op = request.getParameter("op");
         if (op.equals("listar")) {
             try {
@@ -241,7 +212,7 @@ public class cotizacionController extends HttpServlet {
                     lista.add(pro);
                 }
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("Cotizacion.jsp").forward(request, response);
+                request.getRequestDispatcher("venta.jsp").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al mostrar elmentos" +e);
@@ -250,12 +221,12 @@ public class cotizacionController extends HttpServlet {
         else if(op.equals("agregar")){
              
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito;
+            ArrayList<det_venta> carr;
             
-            if(sesion.getAttribute("carrito")==null){
-                carrito=new ArrayList<Cotizar>();
+            if(sesion.getAttribute("carr")==null){
+                carr=new ArrayList<det_venta>();
             }else{
-                carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+                carr=(ArrayList<det_venta>)sesion.getAttribute("carr");
             }
             
             int fila = Integer.parseInt(request.getParameter("fila"));
@@ -268,79 +239,78 @@ public class cotizacionController extends HttpServlet {
             int indice=-1;
             int can=0;
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     indice=i;
                     can=c2.getCan();
                     break;
                 }
             }
-            if(indice==-1)
-            {
-                Cotizar c=new Cotizar(cod, nom, pre, canDet);
-                carrito.add(c);
+            if(indice==-1){
+                det_venta c=new det_venta(cod, nom, pre, canDet);
+                carr.add(c);
+            }else{
+                int can2=can+canDet;
+                det_venta c3=new det_venta(cod,nom,pre,can2);
+                carr.set(indice, c3);
             }
             
-            else
-            {
-                int can2=can+canDet;
-                Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                carrito.set(indice, c3);
-            }   
-            sesion.setAttribute("carrito", carrito);
-            request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);   
-        }
-        
-        else if(op.equals("menos")){
+            sesion.setAttribute("carr", carr);
+            request.getRequestDispatcher("ventaController?op=listar").forward(request, response);
+            
+            
+            
+        }else if(op.equals("menos")){
             int fila = Integer.parseInt(request.getParameter("fila"));
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+            ArrayList<det_venta> carr=(ArrayList<det_venta>)sesion.getAttribute("carr");
             
             String cod=request.getParameter("cod"+fila);
             String nom=request.getParameter("nom"+fila);
             double pre=Double.parseDouble(request.getParameter("pre"+fila));
 
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     if(c2.getCan()>0){
                         int can2=c2.getCan()-1;
-                        Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                        carrito.set(i, c3);
+                        det_venta c3=new det_venta(cod,nom,pre,can2);
+                        carr.set(i, c3);
                     }
                     break;
                 }
             }
-            sesion.setAttribute("carrito", carrito);
-            request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);          
+
+            
+            sesion.setAttribute("carr", carr);
+            request.getRequestDispatcher("ventaController?op=listar").forward(request, response);          
     }
-        
         else if(op.equals("mas")){
             int fila = Integer.parseInt(request.getParameter("fila"));
             HttpSession sesion=request.getSession();
-            ArrayList<Cotizar> carrito=(ArrayList<Cotizar>)sesion.getAttribute("carrito");
+            ArrayList<det_venta> carr=(ArrayList<det_venta>)sesion.getAttribute("carr");
             
             String cod=request.getParameter("cod"+fila);
             String nom=request.getParameter("nom"+fila);
             double pre=Double.parseDouble(request.getParameter("pre"+fila));
 
             
-            for(int i=0;i<carrito.size();i++){
-                Cotizar c2=carrito.get(i);
+            for(int i=0;i<carr.size();i++){
+                det_venta c2=carr.get(i);
                 if(c2.getCod().equals(cod)){
                     if(c2.getCan()>0){
                         int can2=c2.getCan()+1;
-                        Cotizar c3=new Cotizar(cod,nom,pre,can2);
-                        carrito.set(i, c3);
+                        det_venta c3=new det_venta(cod,nom,pre,can2);
+                        carr.set(i, c3);
                     }
                     break;
                 }
             }
            
-            sesion.setAttribute("carrito", carrito);
-            request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);             
+            sesion.setAttribute("carr", carr);
+            request.getRequestDispatcher("ventaController?op=listar").forward(request, response);             
     }
         else if(op.equals("consultar")){
             
@@ -357,40 +327,37 @@ public class cotizacionController extends HttpServlet {
                     lista.add(pro);
                 }
                 request.setAttribute("lista", lista);
-                request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
+                request.getRequestDispatcher("").forward(request, response);
             } catch (Exception e) {
                 System.out.println("Error al mostrar elmentos: "+e);
             }
         }
         
-        //Opcion insertar
-        else if (op.equals("insertar")) {
-
-            String nom = request.getParameter("txtNom");
-            int DNI =Integer.parseInt(request.getParameter("txtDNI"));
-            int cel = Integer.parseInt(request.getParameter("txtCel"));
-            String dir = request.getParameter("txtDir");
-            int idtrab = Integer.parseInt(request.getParameter("txtItra"));
-            String fec = request.getParameter("txtFe");
-
+        else if(op.equals("registrar")){
+            
+            int codigo=Integer.parseInt(request.getParameter("txCod"));
+            String nombre = request.getParameter("txNom");
+            double precio =Integer.parseInt(request.getParameter("txPre"));
+            int cantidad = Integer.parseInt(request.getParameter("txCan"));
+            double monto=Double.parseDouble(request.getParameter("txMon"));
+         
             try {
-                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into cotizacion ( Nom_Ape, DNI,celular, direccion, id_trabajador, fecha) values(?, ?, ?, ?, ?, ?)");
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("insert into det_ventas ( id_Pro,nombre, precio,cantida, total) values(?, ?, ?, ?, ?)");
                 
-                sta.setString(1, nom);
-                sta.setInt(2, DNI);
-                sta.setInt(3, cel);
-                sta.setString(4, dir);
-                sta.setInt(5, idtrab);
-                sta.setString(6, fec);
+                sta.setInt(1, codigo);
+                sta.setString(2, nombre);
+                sta.setDouble(3, precio);
+                sta.setInt(4, cantidad);
+                sta.setDouble(5, monto);
                 sta.executeUpdate();
-                request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
+                request.getRequestDispatcher("ventaController?op=listar").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
                 System.out.println("Error al insertar elemento");
             }
         }
         
-   }
+    }
 
     /**
      * Returns a short description of the servlet.

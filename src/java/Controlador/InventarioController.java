@@ -87,6 +87,7 @@ public class InventarioController extends HttpServlet {
                  System.out.println("Error al mostrar elmentos");
             }
         }
+        
     }
 
     /**
@@ -101,9 +102,41 @@ public class InventarioController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        
-        
-    }
+        String op = request.getParameter("op");
+        if(op.equals("consultar")){
+
+        String nombre=request.getParameter("buscar");
+         try {
+                
+                PreparedStatement sta = cn.prepareStatement("SELECT p.id_Pro, p.descripcion, sum(dv.cantidad) from productos as p inner join det_ventas as dv on p.id_Pro = dv.id_Pro where p.descripcion like ? ");
+                sta.setString(1, "%"+nombre+"%");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<inventario> lista = new ArrayList<>();
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    PreparedStatement sta2 = ConDB.getConnection().prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
+                    sta2.setInt(1, id);
+                    ResultSet rs2 = sta2.executeQuery();
+                    while(rs2.next()){
+                        int inicial = rs2.getInt(1);
+                        int venta = rs.getInt(3);
+                        inventario inv = new inventario(rs.getInt(1), rs.getString(2), inicial ,venta ,(inicial - venta));
+                        lista.add(inv);
+                    }
+                    
+                                                       
+                }
+                request.setAttribute("lista", lista);
+                request.getRequestDispatcher("inventario.jsp").forward(request, response);
+            } 
+            catch (Exception e) {
+                System.out.println("Error al mostrar elmentos: "+e);
+            }
+        }
+    } 
+    
 
     /**
      * Returns a short description of the servlet.
