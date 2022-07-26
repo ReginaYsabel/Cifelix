@@ -5,26 +5,32 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 
-public class Cotizar
+
+
+
+public class Cotizar implements Serializable
+        
 {
- private String cod;
+ private int cod;
  private String nom;
  private double pre;
  private int can;
+ 
 
-    public Cotizar(String cod, String nom, double pre, int can) {
+    public Cotizar(int cod, String nom, double pre, int can) {
         this.cod = cod;
         this.nom = nom;
         this.pre = pre;
         this.can = can;
     }
 
-    public String getCod() {
+    public int getCod() {
         return cod;
     }
 
-    public void setCod(String cod) {
+    public void setCod(int cod) {
         this.cod = cod;
     }
 
@@ -51,5 +57,9 @@ public class Cotizar
     public void setCan(int can) {
         this.can = can;
     }
+ 
+ 
+
+    
 
 }

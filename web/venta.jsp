@@ -1,6 +1,6 @@
+<%@page import="Modelo.det_venta"%>
 <%@page import="Modelo.PROD"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="Modelo.Cotizar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="user.jsp"%>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
             <div class="container">
                 <div class="row-fluid">
                     <div class="col-md-12">
-                        <h2><span class="glyphicon glyphicon-edit"></span> Generar Cotización</h2>
+                        <h2><span class="glyphicon glyphicon-edit"></span> Generar Venta  </h2>
                         <hr>
                         <form class="form-horizontal" role="form" id="datos_cotizacion">
                             <div class="form-group row">
@@ -75,7 +75,7 @@
                                                         </div>
                                                     </form>
                                                     &nbsp;&nbsp;
-                                                    <form action="cotizacionController">
+                                                    
                                                         <table class="table table-striped table-bordered wd-100 text-center">
                                                             <thead class="bg-primary" >
                                                             <th>ID</th>
@@ -92,23 +92,28 @@
                                                                         PROD prod = lista.get(i);
                                                                 %>
                                                                 <tr>
-                                                                    <td><%=prod.getCodigo()%></td>
-                                                                    <td><%=prod.getNombre()%></td>
-                                                                    <td><%=prod.getPrecio()%></td>
-                                                                    <td align="center" style="width:180px"> <input type="number" name="txtCan" min="1" max="100"></td>
-                                                                    <td><input type="submit" name="btn" value="Agregar" class="btn btn-success" align="center"></td>
-                                                                    <input type="hidden" name="op" value="agregar">
-                                                                    <input type="hidden" name="cod" value="<%=prod.getCodigo()%>">
-                                                                    <input type="hidden" name="nom" value="<%=prod.getNombre()%>">
-                                                                    <input type="hidden" name="pre" value="<%=prod.getPrecio()%>">
-                                                                </tr>
+                                                            <form action="ventaController?fila=<%=i%>" method="post">
+                                                                
+                                                                <td><%=prod.getCodigo()%></td>
+                                                                <td><%=prod.getNombre()%></td>
+                                                                <td><%=prod.getPrecio()%></td>
+                                                                <td align="center" style="width:180px"> <input type="number" name="txtCan<%=i%>" min="1" max="100"></td>
+                                                                <td><input type="submit" name="btn" value="Agregar" class="btn btn-success" align="center"></td>
+                                                                <input type="hidden" name="op" value="agregar">
+                                                                <input type="hidden" name="cod<%=i%>" value="<%=prod.getCodigo()%>">
+                                                                <input type="hidden" name="nom<%=i%>" value="<%=prod.getNombre()%>">
+                                                                <input type="hidden" name="pre<%=i%>" value="<%=prod.getPrecio()%>">
 
-                                                                <%
-                                                                    }
-                                                                %>
+                                                                </form> 
+
+                                                            </tr>
+
+                                                            <%
+                                                                }
+                                                            %>
                                                             </tbody>
                                                         </table>
-                                                    </form>    
+                                                       
                                                 </div>    
           
                                             </div>
@@ -117,19 +122,19 @@
                                     <button type="button" class="btn btn-danger" onclick="print()">Imprimir</button>   
                                 </div>	     
                             </div>
-                        </form>	
+                        	
                     </div>
                 </div>	
             </div>
         </main>
         
         <main class="mt-5 pt-2">
-            <form action="cotizacionController"> 
+            <form action="Controller"> 
                 <div class="container-fluid mt-2">              
                     <div class="row">    
                         <div class="col-sm-8">
                           <hr size="5px" color="black">     
-                            <table class="table table-hover">
+                            <table class="table">
                                 <tr>
                                     <th>Codigo</th>
                                     <th>Nombre</th>
@@ -139,21 +144,25 @@
                                 </tr>
                                 <%
                                     double subtotal = 0, igv = 0, total = 0, i = 0, t = 0;
-                                    ArrayList<Cotizar> list = (ArrayList<Cotizar>) session.getAttribute("carrito");
+                                    ArrayList<det_venta> list = (ArrayList<det_venta>) session.getAttribute("carr");
                                     if (lista != null) {
-                                        for (Cotizar d : list) {
+                                        for (int j = 0; j < list.size(); j++) {
+                                             det_venta d = list.get(j);
                                 %>
-                                <tr>
-                                    <td name="txtCodigo"><%=d.getCod()%></td>
-                                    <td name="txtNombre"><%=d.getNom()%></td>
-                                    <td name="txtPrecio"><%=d.getPre()%></td>
-                                    <td name="txtCantidad"><a href="cotizacionController?op=menos&cod=<%=d.getCod()%>&nom=<%=d.getNom()%>&pre=<%=d.getPre()%>" class="btn btn-danger">-</a> <%=d.getCan()%> <a href="cotizacionController?op=mas&cod=<%=d.getCod()%>&nom=<%=d.getNom()%>&pre=<%=d.getPre()%>" class="btn btn-primary">+</a> </td>
-                                    <td name="txtMonto"><%=d.getPre() * d.getCan()%></td>
-                                </tr>
+                                <form>
+                                     <tr>
+                                    <td name=""><%=d.getCod()%></td>
+                                    <td name="txNom"><%=d.getNom()%></td>
+                                    <td name="txPre"><%=d.getPre()%></td>
+                                    <td name="txCan"><a href="ventaController?op=menos&fila=<%=j%>&cod<%=j%>=<%=d.getCod()%>&nom<%=j%>=<%=d.getNom()%>&pre<%=j%>=<%=d.getPre()%>" class="btn btn-danger">-</a> <%=d.getCan()%> <a href="ventaController?op=mas&fila=<%=j%>&cod<%=j%>=<%=d.getCod()%>&nom<%=j%>=<%=d.getNom()%>&pre<%=j%>=<%=d.getPre()%>" class="btn btn-primary">+</a> </td>
+                                    <td name="txMon"><%=d.getPre() * d.getCan()%></td
+                                    </tr>
+                                    
+                                   </form>
                                 <%
                                             subtotal = subtotal + (d.getPre() * d.getCan());
                                         }
-                                        igv = subtotal * 0.18;
+                                          igv = subtotal * 0.18;
                                         i = Math.round(igv * 100.0) / 100.0;
                                         total = subtotal + igv;
                                         t = Math.round(total * 100.0) / 100.0;
@@ -176,9 +185,9 @@
                                         <input type="text" value="<%=t%>" name="txtT"  class="form-control " readonly>
                                     </div>
                                     <div class="card-footer">
-                                         <button type="submit" href="cotizacionController?op=insertarDT" class="btn btn-danger w-100 fw-bold mt-2">Guardar Cotización</button>   
+                                         <button type="submit" href="ventaController?op=insertar" class="btn btn-danger w-100 fw-bold mt-2">Generar venta    </button>   
                                     </div>
-                                    <input type="hidden" name="ope" value="Insertars    " >                    
+                                    <input type="hidden" name="ope" value="Insertar " >                    
                                 </div>                   
                         </div>
                     </div>

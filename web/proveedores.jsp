@@ -28,7 +28,7 @@
 
                 <!-- Buscador y Ventana modal -->
                 <div class="d-flex align-items-center justify-content-between">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">Agregar Proveedor </button>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal"><i class="fa-solid fa-plus"></i> &nbsp;Agregar Proveedor </button>
 
                     <!-- Modal -->
                     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -77,11 +77,13 @@
                         </div>
                     </div>
 
-                    <!-- Buscador -->
-                    <div class="input-brand input-group mt-3">
-                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                    </div>
+                     <!-- Buscador -->
+                    <form class="buscador" method="post" action="proveedorController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="buscar">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
+                        </div>
+                    </form>
                 </div>
 
                 <!-- Tabla de marcas -->

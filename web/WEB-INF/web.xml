@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app id="WebApp_ID" version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
     <display-name>Java Servlet 2.5 Web Application</display-name>
+
     <servlet>
         <servlet-name>CategoriaController</servlet-name>
         <servlet-class>Controlador.CategoriaController</servlet-class>
@@ -45,6 +49,10 @@
         <servlet-name>cotizacionController</servlet-name>
         <servlet-class>Controlador.cotizacionController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ventaController</servlet-name>
+        <servlet-class>Controlador.ventaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CategoriaController</servlet-name>
         <url-pattern>/CategoriaController</url-pattern>
@@ -86,6 +94,10 @@
     <servlet-mapping>
         <servlet-name>cotizacionController</servlet-name>
         <url-pattern>/cotizacionController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ventaController</servlet-name>
+        <url-pattern>/ventaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
