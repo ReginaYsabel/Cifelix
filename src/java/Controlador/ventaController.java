@@ -6,7 +6,7 @@
 package Controlador;
 
 import Modelo.PROD;
-
+import Modelo.ven_re;
 import Modelo.det_venta;
 import Modelo.venta;
 import Utils.ConDB;
@@ -41,7 +41,8 @@ public class ventaController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+      
+         
         
     }
 
@@ -178,6 +179,25 @@ public class ventaController extends HttpServlet {
             sesion.setAttribute("carr", carr);
              request.getRequestDispatcher("ventaController?op=listar").forward(request, response);             
     }
+        else if (op.equals("lisv")) {
+            try {
+
+                PreparedStatement sta = ConDB.getConnection().prepareStatement("SELECT v.id_venta, v.Nom_Ape, v.fecha, dv.cantidad,p.descripcion, dv.total FROM venta v inner join det_ventas dv on v.id_venta = dv.id_venta INNER JOIN productos p ON dv.id_Pro= p.id_Pro");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<ven_re> lisv = new ArrayList<>();
+
+                while (rs.next()) {
+                    ven_re vRE = new ven_re(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getInt(4),rs.getString(5),rs.getDouble(6));
+                    lisv .add(vRE);
+                }
+                request.setAttribute("lisv ", lisv );
+                request.getRequestDispatcher("VENT_echas.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.out.println("Error al mostrar elmentos: "+e);
+            }
+        }
+        
         
            
      
@@ -356,6 +376,7 @@ public class ventaController extends HttpServlet {
                 System.out.println("Error al insertar elemento");
             }
         }
+        
         
     }
 

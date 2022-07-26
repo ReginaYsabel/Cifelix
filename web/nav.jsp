@@ -91,7 +91,7 @@
                         <ul>
                             <li class="lista"><a class="nav-link link-dark" href="ventaController?op=listar">Realizar Ventas</a> </li>
                           
-                            <li class="lista">ventas Realizadas</li>
+                            <li class="lista"><a class="nav-link link-dark" href="ventaController?op=lisv">Ventas Realizadas</a></li>
                         </ul>
 
                     </div>
@@ -111,6 +111,8 @@
                         <ul>
                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">R. produc vendidos</a></li>
                             <li class="lista"><a class="nav-link text-dark" href="proveedorController?op=listar">Lista Proveedores</a></li>
+                           <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=lisv">R. venta por mes</a></li>
+                           
                         </ul>
 
                     </div>

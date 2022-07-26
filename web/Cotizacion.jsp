@@ -6,7 +6,7 @@
 <%@page import="Modelo.Cotizar"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.PROD"%>
-<%@include file="user.jsp" %>%>
+<%@include file="user.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,7 +75,13 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    
+                                                     <!-- buscardor-->
+                                                    <form class="d-flex ms-4 my-1 my-lg-0">
+                                                        <div class="input-group">
+                                                            <input class="form-control" type="search" placeholder="Buscar" aria-label="Search"/>
+                                                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                                                        </div>
+                                                    </form>
                                                     &nbsp;&nbsp;
                                                     
                                                         <table class="table table-striped table-bordered wd-100 text-center">
@@ -146,7 +152,9 @@
                                 </tr>
                                 <%
                                     ArrayList<Cotizar> list = (ArrayList<Cotizar>) session.getAttribute("carrito");
-                                        for (int j = 0; j < list.size(); j++) {
+                                    if (list != null) {   
+                                    for (int j = 0; j < list.size(); j++) {
+                                            
                                                 Cotizar d = list.get(j);                                   
                                 %>
                                 <tr>
@@ -160,12 +168,12 @@
                                     
                                 </tr>
                                 <%  
-                                       }                                     
+                                       }    }                                 
                                 %>               
                             </table>
                         </div> 
                         <div class="col-sm-4">
-                            <form action="categoriaController">
+                            <form action="">
                                 <div class="card">
                                     <div class="card-header bg-primary">
                                         <p class="h5 text-light text-center">Generar Calculos</p>
