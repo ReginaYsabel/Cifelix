@@ -4,7 +4,8 @@
  */
 package Controlador;
 
-import Modelo.categoria;
+import Modelo.V_Mes;
+
 import Modelo.inventario;
 import Utils.ConDB;
 import java.io.IOException;
@@ -85,6 +86,24 @@ public class InventarioController extends HttpServlet {
                 request.getRequestDispatcher("inventario.jsp").forward(request, response);
             } catch (IOException | SQLException | ServletException e) {
                  System.out.println("Error al mostrar elmentos "+e);
+            }
+        }
+        if (op.equals("lisv")) {
+            try {
+
+                PreparedStatement sta =  cn.prepareStatement("select date_format(fecha, '%M') as Month,SUM(subtotal) AS Suma_subtotal, sum(IGV) as SUMA_IGV, SUM(total) AS SUM_TOTAL from venta group by date_format(fecha, '%M')");
+                ResultSet rs = sta.executeQuery();
+
+                ArrayList<V_Mes> lisv = new ArrayList<>();
+
+                while (rs.next()) {
+                    V_Mes vmes = new V_Mes(rs.getString(1), rs.getDouble(2),rs.getDouble(3),rs.getDouble(4));
+                    lisv .add(vmes);
+                }
+                request.setAttribute("lisv ", lisv );
+                request.getRequestDispatcher("R_venta.jsp").forward(request, response);
+            } catch (Exception e) {
+                System.out.println("Error al mostrar elmentos: "+e);
             }
         }
     }

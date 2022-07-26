@@ -131,9 +131,9 @@
                 <div id="flush-collapsefive" class="accordion-collapse collapse" aria-labelledby="flush-headingfive" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
                         <ul>
-                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=listar">Reporte de Productos</a></li>
+                            <li class="lista"><a  href="InventarioController?op=listar"class="link-dark" style="text-decoration: none"> Reporte de Productos</a></li>
                             <li class="lista"> <a href="LoteController?op=listar" class="link-dark" style="text-decoration: none">Productos perecederos</a></li>
-
+                            <li class="lista"><a class="nav-link text-dark" href="InventarioController?op=lisv">R. venta por mes</a></li>
                         </ul>
 
                     </div>
