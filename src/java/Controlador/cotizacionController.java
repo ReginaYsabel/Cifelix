@@ -401,9 +401,9 @@ public class cotizacionController extends HttpServlet {
             //String fec = request.getParameter("txtFe");
             Date nuevaFecha = Date.valueOf(request.getParameter("txtFecha"));
             
-            //double subtotal = Double.parseDouble(request.getParameter("txtSub"));
-            //double igv = Double.parseDouble(request.getParameter("txtIgv"));
-            //double total = Double.parseDouble(request.getParameter("txtTotal"));
+            double subtotal = Double.parseDouble(request.getParameter("txtSub"));
+            double igv = Double.parseDouble(request.getParameter("txtIgv"));
+            double total = Double.parseDouble(request.getParameter("txtTotal"));
 
             try {
                 PreparedStatement sta = cn.prepareStatement("insert into cotizacion ( Nom_Ape, DNI,celular, direccion, id_trabajador, fecha) values(?, ?, ?, ?, ?, ?)");
@@ -414,9 +414,9 @@ public class cotizacionController extends HttpServlet {
                 sta.setString(4, dir);
                 sta.setInt(5, idtrab);
                 sta.setDate(6, nuevaFecha);
-                //sta.setDouble(7, subtotal);
-                //sta.setDouble(8, igv);
-                //sta.setDouble(9, total);
+                sta.setDouble(7, subtotal);
+                sta.setDouble(8, igv);
+                sta.setDouble(9, total);
                 sta.executeUpdate();
                 
                

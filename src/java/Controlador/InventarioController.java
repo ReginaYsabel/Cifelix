@@ -62,7 +62,7 @@ public class InventarioController extends HttpServlet {
         if (op.equals("listar")) {
             try {
                 
-                PreparedStatement sta = cn.prepareStatement("SELECT p.id_Pro, p.descripcion, sum(dv.cantidad) from productos as p inner join det_ventas as dv on p.id_Pro = dv.id_Pro;");
+                PreparedStatement sta = cn.prepareStatement("SELECT p.id_Pro, p.descripcion, sum(dv.cantidad) from productos as p inner join det_ventas as dv on p.id_Pro = dv.id_Pro group by dv.id_Pro;");
                 ResultSet rs = sta.executeQuery();
 
                 ArrayList<inventario> lista = new ArrayList<>();

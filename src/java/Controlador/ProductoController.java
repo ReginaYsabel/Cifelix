@@ -65,9 +65,15 @@ public class ProductoController extends HttpServlet {
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
                     while(rs2.next()){
-
+                        
+                       
                         producto prod = new producto(id,rs.getString(2), rs.getDouble(3),rs2.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6));
                         lista.add(prod);
+                        int cantidad = rs2.getInt(1);
+                        PreparedStatement sta3 = cn.prepareStatement("update productos set cantidad = ? where id_Pro=? ");
+                        sta3.setInt(1,cantidad );
+                        sta3.setInt(2, id);
+                        sta3.executeUpdate();
                     }                                      
                 }
 
@@ -226,9 +232,15 @@ public class ProductoController extends HttpServlet {
                     PreparedStatement sta2 = cn.prepareStatement("select sum(cantidad) from lote where id_Pro = ?");
                     sta2.setInt(1, id);
                     ResultSet rs2 = sta2.executeQuery();
+                    
                     while(rs2.next()){
+                        int cantidad = rs2.getInt(1);
+                        PreparedStatement sta3 = cn.prepareStatement("update productos set cantidad = ? where id_Pro=? ");
+                        sta3.setInt(1,cantidad );
+                        sta3.setInt(2, id);
+                        sta3.executeUpdate();
 
-                        producto prod = new producto(id,rs.getString(2), rs.getDouble(3),rs2.getInt(1),rs.getString(4),rs.getString(5),rs.getString(6));
+                        producto prod = new producto(id,rs.getString(2), rs.getDouble(3),cantidad,rs.getString(4),rs.getString(5),rs.getString(6));
                         lista.add(prod);
                     }                                      
                 }
