@@ -84,7 +84,7 @@ public class InventarioController extends HttpServlet {
                 request.setAttribute("lista", lista);
                 request.getRequestDispatcher("inventario.jsp").forward(request, response);
             } catch (IOException | SQLException | ServletException e) {
-                 System.out.println("Error al mostrar elmentos");
+                 System.out.println("Error al mostrar elmentos "+e);
             }
         }
     }

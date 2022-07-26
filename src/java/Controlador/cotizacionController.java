@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 /**
  *
  * @author AMVM_
@@ -77,7 +78,7 @@ public class cotizacionController extends HttpServlet {
                 request.getRequestDispatcher("Cotizacion.jsp").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
-                System.out.println("Error al mostrar elmentos" +e);
+                System.out.println("Error al listar elmentos" +e);
             }
         } 
         
@@ -120,7 +121,7 @@ public class cotizacionController extends HttpServlet {
             }
             
             sesion.setAttribute("carrito", carrito);
-            log("Tamañoooooo: "+carrito.size());
+            
             request.getRequestDispatcher("cotizacionController?op=listar").forward(request, response);
             
             
@@ -210,7 +211,7 @@ public class cotizacionController extends HttpServlet {
                 request.getRequestDispatcher("Cotizacion.jsp").forward(request, response);
 
             } catch (IOException | SQLException | ServletException e) {
-                System.out.println("Error al mostrar elmentos" +e);
+                System.out.println("Error al listar elmentos" +e);
             }
         }
         else if(op.equals("agregar")){

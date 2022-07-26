@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -72,6 +73,7 @@ public class LoteController extends HttpServlet {
                 String estado;
 
                 while (rs.next()) {
+                    HttpSession sesion = request.getSession();
                     Date fecha = rs.getDate(4);
                     int dias = (int) ((fecha.getTime() - fechaActual.getTime()) / milisecondsByDay);
                     if (dias == 5 || dias == 4 || dias == 3 || dias == 2 || dias == 1) {
@@ -82,6 +84,9 @@ public class LoteController extends HttpServlet {
                         estado = "Vencido";
                         lote lot = new lote(rs.getInt(1), rs.getInt(2), rs.getInt(3), fecha, estado);
                         lista.add(lot);
+                        if (sesion.getAttribute("msgPerecedero") == null) {
+                            sesion.setAttribute("msgPerecedero","Tiene nuevos productos vencidos");
+                        } 
                     }
                 }
                 request.setAttribute("lista", lista);
@@ -139,13 +144,12 @@ public class LoteController extends HttpServlet {
 
                 Date fechaActual = new Date(System.currentTimeMillis());
                 int milisecondsByDay = 86400000;
-                
                 String estado;
 
                 while (rs.next()) {
+                    HttpSession sesion = request.getSession();
                     Date fecha = rs.getDate(4);
                     int dias = (int) ((fecha.getTime() - fechaActual.getTime()) / milisecondsByDay);
-                    log("" + dias);
                     if (dias == 5 || dias == 4 || dias == 3 || dias == 2 || dias == 1) {
                         estado = "Proximo a vencer";
                         lote lot = new lote(rs.getInt(1), rs.getInt(2), rs.getInt(3), fecha, estado);
@@ -154,6 +158,9 @@ public class LoteController extends HttpServlet {
                         estado = "Vencido";
                         lote lot = new lote(rs.getInt(1), rs.getInt(2), rs.getInt(3), fecha, estado);
                         lista.add(lot);
+                        if (sesion.getAttribute("msgPerecedero") == null) {
+                            sesion.setAttribute("msgPerecedero","Tiene nuevos productos vencidos");
+                        } 
                     }
                 }
                 request.setAttribute("lista", lista);

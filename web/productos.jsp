@@ -186,8 +186,19 @@
                             <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Buscar</button>
                         </div>
                     </form>
+                    
 
                 </div>
+                                                    
+                <%if(request.getAttribute("msg")!=null){
+                String msg=request.getAttribute("msg").toString(); 
+                %>
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    <Strong><%= msg%></Strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                 
+                    <% } %>
 
                 <!-- Tabla de productos -->
                 <div class="tabla row text-center">
@@ -325,6 +336,8 @@
                 </div>
             </div>
         </main>
+        
+
     </body>
 
 </html>

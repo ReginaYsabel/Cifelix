@@ -27,15 +27,21 @@
                 </div> 
 
                 <!-- Buscador -->
-                <div>
-                    <div class="input-group mt-3">                     
-                        <input type="text" class="form-control" placeholder="Buscar Producto" aria-label="Buscar Producto" aria-describedby="button-addon2" required>
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
+                <div class="d-flex align-items-center justify-content-between">
+                    <form class="buscador" method="post" action="ProductoController?op=consultar">
+                        <div class="input-brand input-group mt-3">
+                            <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar" aria-describedby="button-addon2" name="buscar" required>
+                            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                    
+                    <div>
+                        <button class="btn btn-danger" type="button" id="button-addon2" onclick="printDiv('tabla')">Imprimir</button>
                     </div>
                 </div>
 
                 <!-- Tabla de productos -->
-                <div class="tabla row text-center">
+                <div class="tabla row text-center" id="tabla">
                     <table class="table">
                         <thead class="table-light">
                             <tr>
@@ -80,6 +86,17 @@
                 }
             }           
             color();
+            
+            function printDiv(nombreDiv) {
+            var contenido= document.getElementById(nombreDiv).innerHTML;
+            var contenidoOriginal= document.body.innerHTML;
+
+            document.body.innerHTML = contenido;
+
+            window.print();
+
+            document.body.innerHTML = contenidoOriginal;
+        }
         </script>
     </body>
 </html>

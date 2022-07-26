@@ -4,6 +4,7 @@ import Modelo.marca;
 import Modelo.producto;
 import Modelo.proveedor;
 import Utils.ConDB;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -170,9 +171,9 @@ public class ProductoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       String op = request.getParameter("op");
-        
+        // processRequest(request, response);
+        String op = request.getParameter("op");
+
         //Opcion insertar
         if (op.equals("insertar")) {
             String nombre = request.getParameter("txtProd");
@@ -180,21 +181,33 @@ public class ProductoController extends HttpServlet {
             double precio = Double.parseDouble(request.getParameter("txtPrecio"));
             int marca = Integer.parseInt(request.getParameter("select_marca"));
             int proveedor = Integer.parseInt(request.getParameter("select_prov"));
-            
+
             try {
+
                 PreparedStatement sta = cn.prepareStatement("insert into productos (descripcion, precio, id_Marca, id_Categoria, id_Proveedor) values(?,?,?,?,?)");
-                sta.setString(1, nombre); 
+                sta.setString(1, nombre);
                 sta.setDouble(2, precio);
                 sta.setInt(3, marca);
                 sta.setInt(4, categoria);
                 sta.setInt(5, proveedor);
-                
+
                 sta.executeUpdate();
-                
+
                 response.sendRedirect("ProductoController?op=listar");
 
-            } catch (Exception e) {
-                log("Error al insertar elemento: "+e);
+            } catch (IOException e) {
+                log("Error al insertar elemento: " + e);
+            } catch (SQLException s) {
+                if (s instanceof MySQLIntegrityConstraintViolationException) {
+                    if (s.getSQLState().equals("23000")) {
+                        if (s.getMessage().contains("Duplicate")) {
+                            System.out.println("Elmento duplicadooooo");
+                            request.setAttribute("msg", "El nombre ya ha sido tomado. Por favor, intente con otro");
+                            request.getRequestDispatcher("ProductoController?op=listar").forward(request, response);
+
+                        }
+                    }
+                }
             }
         }
         
